@@ -1,0 +1,12 @@
+2026-04-02 15:40:43,950 INFO [main] c.e.c.c.a.AccountAop [AccountAop.java:28] 로그인 요청 : ID 1, Password 1
+2026-04-02 15:42:03,821 INFO [main] c.e.c.c.a.AccountAop [AccountAop.java:28] 로그인 요청 : ID 2, Password 2
+2026-04-02 15:42:07,502 INFO [main] c.e.c.c.a.AccountAop [AccountAop.java:33] 로그아웃 요청
+2026-04-02 15:45:38,612 INFO [main] c.e.c.c.a.AccountAop [AccountAop.java:28] 로그인 요청 : ID 1, Password 1
+2026-04-02 15:46:22,332 INFO [main] c.e.c.c.a.AccountAop [AccountAop.java:28] 로그인 요청 : ID 1, Password 1
+2026-04-02 15:46:23,777 INFO [main] c.e.c.c.a.AccountAop [AccountAop.java:33] 로그아웃 요청
+2026-04-02 15:47:06,558 INFO [main] c.e.c.c.a.AccountAop [AccountAop.java:28] 로그인 요청 : ID 1, Password 1
+2026-04-02 15:52:08,879 INFO [main] c.e.c.c.a.AccountAop [AccountAop.java:28] 로그인 요청 : ID 1, Password 1
+2026-04-02 15:52:10,715 INFO [main] c.e.c.c.a.AccountAop [AccountAop.java:33] 로그아웃 요청
+2026-04-02 16:52:35,251 INFO [main] c.e.c.c.a.AccountAop [AccountAop.java:28] login([1, 1])
+2026-04-02 16:52:39,362 INFO [main] c.e.c.c.a.AccountAop [AccountAop.java:33] logout([])
+2026-04-02 16:54:18,964 INFO [main] c.e.c.c.a.AccountAop [AccountAop.java:28] login([1, 1])
