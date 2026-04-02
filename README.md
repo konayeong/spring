@@ -1,5 +1,5 @@
 # Spring 결산 과제
-## Spring Core
+## [Spring Core](https://github.com/konayeong/spring/tree/spring-core-final)
 ### 상수도 요금 계산 CLI 프로그램 (Spring Boot)
 - 파일(CSV/JSON) 기반으로 요금표 및 회원 정보를 로드
 - Property 설정에 따라 CSV ↔ JSON 파싱 방식 전환 (@ConditionalOnProperty())
