@@ -1,6 +1,7 @@
 package com.example.core.common.parser.impl;
 
 import com.example.core.account.domain.Account;
+import com.example.core.common.exception.ParsingException;
 import com.example.core.common.properties.FileProperties;
 import com.example.core.price.domain.Price;
 import com.example.core.common.parser.DataParser;
@@ -33,48 +34,9 @@ public class CsvDataParser implements DataParser {
                     .parse();
         } catch (IOException e) {
             log.error("CSV Account 파싱 실패", e);
-            throw new RuntimeException("account.csv 파싱 실패",e);
+            throw new ParsingException("account.csv 파싱 실패");
         }
     }
-
-    /*
-    return parser.getRecords().stream()
-        .map(record -> new Account(
-                Long.parseLong(record.get("id")),
-                record.get("name"),
-                Integer.parseInt(record.get("balance"))
-        ))
-        .toList();
-    @Override
-public List<Account> accounts() {
-    File targetFile = new File(fileProperties.getAccountPath());
-
-    try (BufferedReader br = new BufferedReader(new FileReader(targetFile))) {
-
-        CSVParser parser = CSVFormat.DEFAULT
-                .withFirstRecordAsHeader() // 첫 줄 header 사용
-                .parse(br);
-
-        List<Account> accounts = new ArrayList<>();
-
-        for (CSVRecord record : parser) {
-            Account account = new Account();
-
-            account.setId(Long.parseLong(record.get("id")));
-            account.setName(record.get("name"));
-            account.setBalance(Integer.parseInt(record.get("balance")));
-
-            accounts.add(account);
-        }
-
-        return accounts;
-
-    } catch (IOException e) {
-        log.error("CSV Account 파싱 실패", e);
-        throw new RuntimeException("account.csv 파싱 실패", e);
-    }
-}
-     */
 
     @Override
     public List<Price> prices() {
@@ -87,7 +49,7 @@ public List<Account> accounts() {
                                     .parse();
         } catch (IOException e) {
             log.error("CSV Tariff(Price) 파싱 실패", e);
-            throw new RuntimeException("Tariff.csv 파싱 실패");
+            throw new ParsingException("Tariff.csv 파싱 실패");
         }
     }
 }

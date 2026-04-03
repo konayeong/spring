@@ -116,3 +116,10 @@ Consider defining a bean of type 'com.example.core.price.formatter.OutPutFormatt
 2026-04-03 13:41:04 [main] INFO  c.e.core.price.service.PriceService - Price Save Count : 303
 2026-04-03 13:41:04 [main] WARN  org.jline - Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
 2026-04-03 13:41:05 [main] INFO  com.example.core.CoreApplication - Started CoreApplication in 1.393 seconds (process running for 6.658)
+2026-04-03 15:13:26 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.0.1.Final
+2026-04-03 15:13:26 [main] INFO  c.example.core.CoreApplicationTests - Starting CoreApplicationTests using Java 21.0.8 with PID 89160 (started by chosun-nhn55 in /Users/chosun-nhn55/Desktop/spring/core/spring-boot-core-final)
+2026-04-03 15:13:26 [main] INFO  c.example.core.CoreApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2026-04-03 15:13:26 [main] INFO  c.e.c.a.s.AuthenticationService - Accounts : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+2026-04-03 15:13:26 [main] INFO  c.e.core.price.service.PriceService - Price Save Count : 303
+2026-04-03 15:13:27 [main] WARN  org.jline - Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
+2026-04-03 15:13:27 [main] INFO  c.example.core.CoreApplicationTests - Started CoreApplicationTests in 1.727 seconds (process running for 7.462)

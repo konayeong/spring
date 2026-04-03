@@ -1,6 +1,7 @@
 package com.example.core.common.parser.impl;
 
 import com.example.core.account.domain.Account;
+import com.example.core.common.exception.ParsingException;
 import com.example.core.common.properties.FileProperties;
 import com.example.core.price.domain.Price;
 import com.example.core.common.parser.DataParser;
@@ -34,7 +35,7 @@ public class JsonDataParser implements DataParser {
             return objectMapper.readValue(file, new TypeReference<List<Account>>() {});
         } catch (IOException e) {
             log.error("JSON Account 파싱 실패", e);
-            throw new RuntimeException("account.json 파싱 실패");
+            throw new ParsingException("account.json 파싱 실패");
         }
     }
 
@@ -45,7 +46,7 @@ public class JsonDataParser implements DataParser {
            return objectMapper.readValue(file, new TypeReference<List<Price>>() {});
        } catch (IOException e) {
            log.error("JSON Price 파싱 실패", e);
-           throw new RuntimeException("Tariff.json 파싱 실패");
+           throw new ParsingException("Tariff.json 파싱 실패");
        }
     }
 
