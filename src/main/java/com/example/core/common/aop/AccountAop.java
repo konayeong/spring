@@ -1,6 +1,7 @@
 package com.example.core.common.aop;
 
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -23,12 +24,12 @@ public class AccountAop {
     public void logout() {
     }
 
-    @Before(value = "login() && loginArgs(id, password)", argNames = "id,password")
+    @After(value = "login() && loginArgs(id, password)", argNames = "id,password")
     public void loginLog(Long id, String password) {
         log.info("login([{}, {}])", id, password);
     }
 
-    @Before("logout()")
+    @After("logout()")
     public void logoutLog() {
         log.info("logout([])");
     }

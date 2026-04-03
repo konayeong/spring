@@ -24,11 +24,9 @@ class AuthenticationServiceTest {
     @InjectMocks
     private AuthenticationService authenticationService;
 
-    private List<Account> mockAccounts;
-
     @BeforeEach
     void setUp() {
-        mockAccounts = List.of(
+        List<Account> mockAccounts = List.of(
                 new Account(1L, "1234", "user1"),
                 new Account(2L, "abcd", "user2")
         );

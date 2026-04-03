@@ -9,3 +9,94 @@
 2026-04-03 16:44:08 [main] INFO  c.e.c.a.s.AuthenticationService - 로그인 성공 선도형
 2026-04-03 16:44:23 [main] INFO  c.e.c.a.s.AuthenticationService - 로그아웃 성공
 2026-04-03 16:44:26 [main] INFO  c.e.c.a.s.AuthenticationService - 로그인 성공 soori
+2026-04-03 17:36:09 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.0.1.Final
+2026-04-03 17:36:09 [main] INFO  c.e.core.common.aop.AccountAopTest - Starting AccountAopTest using Java 21.0.8 with PID 92158 (started by chosun-nhn55 in /Users/chosun-nhn55/Desktop/spring/core/spring-boot-core-final)
+2026-04-03 17:36:09 [main] INFO  c.e.core.common.aop.AccountAopTest - No active profile set, falling back to 1 default profile: "default"
+2026-04-03 17:36:09 [main] INFO  c.e.c.a.s.AuthenticationService - Accounts : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+2026-04-03 17:36:09 [main] INFO  c.e.core.price.service.PriceService - Price Save Count : 303
+2026-04-03 17:36:09 [main] WARN  org.jline - Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
+2026-04-03 17:36:10 [main] INFO  c.e.core.common.aop.AccountAopTest - Started AccountAopTest in 1.557 seconds (process running for 2.076)
+2026-04-03 17:37:48 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.0.1.Final
+2026-04-03 17:37:48 [main] INFO  c.e.core.common.aop.AccountAopTest - Starting AccountAopTest using Java 21.0.8 with PID 92225 (started by chosun-nhn55 in /Users/chosun-nhn55/Desktop/spring/core/spring-boot-core-final)
+2026-04-03 17:37:48 [main] INFO  c.e.core.common.aop.AccountAopTest - No active profile set, falling back to 1 default profile: "default"
+2026-04-03 17:37:48 [main] INFO  c.e.c.a.s.AuthenticationService - Accounts : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+2026-04-03 17:37:48 [main] INFO  c.e.core.price.service.PriceService - Price Save Count : 303
+2026-04-03 17:37:48 [main] WARN  org.jline - Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
+2026-04-03 17:37:49 [main] INFO  c.e.core.common.aop.AccountAopTest - Started AccountAopTest in 1.291 seconds (process running for 1.823)
+2026-04-03 17:38:32 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.0.1.Final
+2026-04-03 17:38:32 [main] INFO  c.e.core.common.aop.AccountAopTest - Starting AccountAopTest using Java 21.0.8 with PID 92251 (started by chosun-nhn55 in /Users/chosun-nhn55/Desktop/spring/core/spring-boot-core-final)
+2026-04-03 17:38:32 [main] INFO  c.e.core.common.aop.AccountAopTest - The following 1 profile is active: "csv"
+2026-04-03 17:38:33 [main] INFO  c.e.c.a.s.AuthenticationService - Accounts : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+2026-04-03 17:38:33 [main] INFO  c.e.core.price.service.PriceService - Price Save Count : 303
+2026-04-03 17:38:33 [main] WARN  org.jline - Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
+2026-04-03 17:38:34 [main] INFO  c.e.core.common.aop.AccountAopTest - Started AccountAopTest in 1.244 seconds (process running for 1.749)
+2026-04-03 17:39:13 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.0.1.Final
+2026-04-03 17:39:13 [main] INFO  c.e.core.common.aop.AccountAopTest - Starting AccountAopTest using Java 21.0.8 with PID 92275 (started by chosun-nhn55 in /Users/chosun-nhn55/Desktop/spring/core/spring-boot-core-final)
+2026-04-03 17:39:13 [main] INFO  c.e.core.common.aop.AccountAopTest - No active profile set, falling back to 1 default profile: "default"
+2026-04-03 17:39:14 [main] INFO  c.e.c.a.s.AuthenticationService - Accounts : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+2026-04-03 17:39:14 [main] INFO  c.e.core.price.service.PriceService - Price Save Count : 303
+2026-04-03 17:39:14 [main] WARN  org.jline - Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
+2026-04-03 17:39:14 [main] INFO  c.e.core.common.aop.AccountAopTest - Started AccountAopTest in 1.227 seconds (process running for 1.717)
+2026-04-03 17:57:41 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.0.1.Final
+2026-04-03 17:57:41 [main] INFO  c.e.core.common.aop.PriceAopTest - Starting PriceAopTest using Java 21.0.8 with PID 92506 (started by chosun-nhn55 in /Users/chosun-nhn55/Desktop/spring/core/spring-boot-core-final)
+2026-04-03 17:57:41 [main] INFO  c.e.core.common.aop.PriceAopTest - No active profile set, falling back to 1 default profile: "default"
+2026-04-03 17:57:41 [main] INFO  c.e.c.a.s.AuthenticationService - Accounts : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+2026-04-03 17:57:41 [main] INFO  c.e.core.price.service.PriceService - Price Save Count : 303
+2026-04-03 17:57:42 [main] WARN  org.jline - Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
+2026-04-03 17:57:42 [main] INFO  c.e.core.common.aop.PriceAopTest - Started PriceAopTest in 1.313 seconds (process running for 1.812)
+2026-04-03 18:01:00 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.0.1.Final
+2026-04-03 18:01:00 [main] INFO  c.e.core.common.aop.PriceAopTest - Starting PriceAopTest using Java 21.0.8 with PID 92553 (started by chosun-nhn55 in /Users/chosun-nhn55/Desktop/spring/core/spring-boot-core-final)
+2026-04-03 18:01:00 [main] INFO  c.e.core.common.aop.PriceAopTest - No active profile set, falling back to 1 default profile: "default"
+2026-04-03 18:01:00 [main] INFO  c.e.c.a.s.AuthenticationService - Accounts : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+2026-04-03 18:01:00 [main] INFO  c.e.core.price.service.PriceService - Price Save Count : 303
+2026-04-03 18:01:00 [main] WARN  org.jline - Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
+2026-04-03 18:01:01 [main] INFO  c.e.core.common.aop.PriceAopTest - Started PriceAopTest in 1.235 seconds (process running for 1.725)
+2026-04-03 18:01:01 [main] INFO  c.e.c.a.s.AuthenticationService - 로그인 성공 선도형
+2026-04-03 18:01:01 [main] INFO  c.e.c.a.s.AuthenticationService - 로그인 성공 선도형
+2026-04-03 18:01:01 [main] INFO  c.e.c.a.s.AuthenticationService - 로그아웃 성공
+2026-04-03 18:01:01 [main] INFO  c.e.c.a.s.AuthenticationService - 로그인 성공 선도형
+2026-04-03 18:03:32 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.0.1.Final
+2026-04-03 18:03:32 [main] INFO  c.e.core.common.aop.AccountAopTest - Starting AccountAopTest using Java 21.0.8 with PID 92580 (started by chosun-nhn55 in /Users/chosun-nhn55/Desktop/spring/core/spring-boot-core-final)
+2026-04-03 18:03:32 [main] INFO  c.e.core.common.aop.AccountAopTest - No active profile set, falling back to 1 default profile: "default"
+2026-04-03 18:03:32 [main] INFO  c.e.c.a.s.AuthenticationService - Accounts : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+2026-04-03 18:03:32 [main] INFO  c.e.core.price.service.PriceService - Price Save Count : 303
+2026-04-03 18:03:33 [main] WARN  org.jline - Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
+2026-04-03 18:03:33 [main] INFO  c.e.core.common.aop.AccountAopTest - Started AccountAopTest in 1.488 seconds (process running for 1.978)
+2026-04-03 18:03:33 [main] INFO  c.e.c.a.s.AuthenticationService - 로그인 성공 선도형
+2026-04-03 18:05:40 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.0.1.Final
+2026-04-03 18:05:40 [main] INFO  c.e.core.common.aop.AccountAopTest - Starting AccountAopTest using Java 21.0.8 with PID 92614 (started by chosun-nhn55 in /Users/chosun-nhn55/Desktop/spring/core/spring-boot-core-final)
+2026-04-03 18:05:40 [main] INFO  c.e.core.common.aop.AccountAopTest - No active profile set, falling back to 1 default profile: "default"
+2026-04-03 18:05:41 [main] INFO  c.e.c.a.s.AuthenticationService - Accounts : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+2026-04-03 18:05:41 [main] INFO  c.e.core.price.service.PriceService - Price Save Count : 303
+2026-04-03 18:05:41 [main] WARN  org.jline - Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
+2026-04-03 18:05:42 [main] INFO  c.e.core.common.aop.AccountAopTest - Started AccountAopTest in 1.239 seconds (process running for 1.722)
+2026-04-03 18:05:42 [main] INFO  c.e.c.a.s.AuthenticationService - 로그인 성공 선도형
+2026-04-03 18:06:42 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.0.1.Final
+2026-04-03 18:06:42 [main] INFO  c.e.core.common.aop.AccountAopTest - Starting AccountAopTest using Java 21.0.8 with PID 92640 (started by chosun-nhn55 in /Users/chosun-nhn55/Desktop/spring/core/spring-boot-core-final)
+2026-04-03 18:06:42 [main] INFO  c.e.core.common.aop.AccountAopTest - No active profile set, falling back to 1 default profile: "default"
+2026-04-03 18:06:42 [main] INFO  c.e.c.a.s.AuthenticationService - Accounts : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+2026-04-03 18:06:42 [main] INFO  c.e.core.price.service.PriceService - Price Save Count : 303
+2026-04-03 18:06:42 [main] WARN  org.jline - Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
+2026-04-03 18:06:43 [main] INFO  c.e.core.common.aop.AccountAopTest - Started AccountAopTest in 1.262 seconds (process running for 1.737)
+2026-04-03 18:06:43 [main] INFO  c.e.c.a.s.AuthenticationService - 로그인 성공 선도형
+2026-04-03 18:07:03 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.0.1.Final
+2026-04-03 18:07:03 [main] INFO  c.e.core.common.aop.AccountAopTest - Starting AccountAopTest using Java 21.0.8 with PID 92655 (started by chosun-nhn55 in /Users/chosun-nhn55/Desktop/spring/core/spring-boot-core-final)
+2026-04-03 18:07:03 [main] INFO  c.e.core.common.aop.AccountAopTest - No active profile set, falling back to 1 default profile: "default"
+2026-04-03 18:07:04 [main] INFO  c.e.c.a.s.AuthenticationService - Accounts : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+2026-04-03 18:07:04 [main] INFO  c.e.core.price.service.PriceService - Price Save Count : 303
+2026-04-03 18:07:04 [main] WARN  org.jline - Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
+2026-04-03 18:07:04 [main] INFO  c.e.core.common.aop.AccountAopTest - Started AccountAopTest in 1.322 seconds (process running for 2.112)
+2026-04-03 18:07:16 [main] INFO  c.e.c.a.s.AuthenticationService - 로그인 성공 선도형
+2026-04-03 18:07:30 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.0.1.Final
+2026-04-03 18:07:30 [main] INFO  c.e.core.common.aop.AccountAopTest - Starting AccountAopTest using Java 21.0.8 with PID 92674 (started by chosun-nhn55 in /Users/chosun-nhn55/Desktop/spring/core/spring-boot-core-final)
+2026-04-03 18:07:30 [main] INFO  c.e.core.common.aop.AccountAopTest - No active profile set, falling back to 1 default profile: "default"
+2026-04-03 18:07:30 [main] INFO  c.e.c.a.s.AuthenticationService - Accounts : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+2026-04-03 18:07:30 [main] INFO  c.e.core.price.service.PriceService - Price Save Count : 303
+2026-04-03 18:07:31 [main] WARN  org.jline - Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
+2026-04-03 18:07:31 [main] INFO  c.e.core.common.aop.AccountAopTest - Started AccountAopTest in 1.228 seconds (process running for 1.729)
+2026-04-03 18:07:32 [main] INFO  c.e.c.a.s.AuthenticationService - 로그인 성공 선도형
+2026-04-03 18:07:32 [main] INFO  o.j.p.l.core.DiscoveryIssueNotifier - TestEngine with ID 'junit-jupiter' encountered a non-critical issue during test discovery:
+
+(1) [INFO] Ineffective @Order annotation on method 'void com.example.core.common.aop.AccountAopTest.loginLog(org.springframework.boot.test.system.CapturedOutput)'. It will not be applied because MethodOrderer.OrderAnnotation is not in use. Note that the annotation may be either directly present or meta-present on the method.
+    Source: MethodSource [className = 'com.example.core.common.aop.AccountAopTest', methodName = 'loginLog', methodParameterTypes = 'org.springframework.boot.test.system.CapturedOutput']
+            at com.example.core.common.aop.AccountAopTest.loginLog(SourceFile:0)

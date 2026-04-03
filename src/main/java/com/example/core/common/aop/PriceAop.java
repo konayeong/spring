@@ -26,7 +26,7 @@ public class PriceAop {
     @Before("log()")
     public void loginCheck(JoinPoint joinPoint) {
         if(!authenticationService.isLogin()) {
-            log.debug("[로그인 필요]");
+            log.info("[로그인 필요]");
             throw new NotLoggedInException();
         }else {
             Account account = authenticationService.currentUser();

@@ -6,3 +6,7 @@
 <----- soori class com.example.core.command.MyCommands(Price(id=194, city=진도군, sector=산업용, unitPrice=850)) -----
 ----- soori class com.example.core.command.MyCommands([진도군, 산업용, 10]) ----->
 <----- soori class com.example.core.command.MyCommands(지자체명: 진도군, 업종: 산업용, 구간금액(원): 850, 총금액(원): 8500) -----
+----- 선도형 class com.example.core.command.MyCommands([진도군, 산업용]) ----->
+<----- 선도형 class com.example.core.command.MyCommands(Price(id=194, city=진도군, sector=산업용, unitPrice=850)) -----
+----- 선도형 class com.example.core.command.MyCommands([진도군]) ----->
+<----- 선도형 class com.example.core.command.MyCommands([가정용, 일반용, 대중탕용, 산업용]) -----
