@@ -2,11 +2,13 @@ package com.example.core.price.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.opencsv.bean.CsvBindByName;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Price {
     @CsvBindByName(column = "순번")
     @JsonProperty(value = "순번")

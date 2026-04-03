@@ -8,8 +8,6 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
-
 @Slf4j
 @Aspect
 @Component
@@ -27,12 +25,11 @@ public class PriceAop {
     // 로그인 체크
     @Before("log()")
     public void loginCheck(JoinPoint joinPoint) {
-        Account account = authenticationService.currentUser();
-
-        if(Objects.isNull(account)) {
+        if(!authenticationService.isLogin()) {
             log.debug("[로그인 필요]");
             throw new NotLoggedInException();
         }else {
+            Account account = authenticationService.currentUser();
             String name = account.getName();
             String className = joinPoint.getSignature().getDeclaringTypeName();
             log.info("----- {} class {}({}) ----->", name, className, joinPoint.getArgs());

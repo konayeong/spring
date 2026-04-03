@@ -1,9 +1,11 @@
 package com.example.core.price.service;
 
+import com.example.core.common.exception.price.NotFoundCitiesException;
+import com.example.core.common.exception.price.NotFoundPriceException;
+import com.example.core.common.exception.price.NotFoundSectorsException;
 import com.example.core.common.parser.DataParser;
 import com.example.core.price.domain.Price;
 import com.example.core.price.formatter.OutPutFormatter;
-import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -20,10 +22,10 @@ public class PriceService {
     public PriceService(DataParser dataParser, OutPutFormatter outPutFormatter) {
         this.dataParser = dataParser;
         this.outPutFormatter = outPutFormatter;
+        loadPrices();
     }
 
     // 사용 전 map에 저장
-    @PostConstruct
     public void loadPrices() {
         List<Price> prices = dataParser.prices();
         for(Price price : prices) {
@@ -41,6 +43,7 @@ public class PriceService {
 
         if(cities.isEmpty()) {
             log.debug("지자체 존재하지 않음");
+            throw new NotFoundCitiesException();
         }
 
         return cities;
@@ -55,6 +58,7 @@ public class PriceService {
 
         if(sectors.isEmpty()) {
             log.debug("업종 목록 존재하지 않음");
+            throw new NotFoundSectorsException(city);
         }
 
         return sectors;
@@ -67,7 +71,7 @@ public class PriceService {
 
         if(price.isEmpty()) {
             log.debug("구간금액을 찾을 수 없음");
-            return null;
+            throw new NotFoundPriceException(city, sector);
         }
 
         return price.get();

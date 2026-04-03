@@ -5,7 +5,6 @@ import com.example.core.common.exception.auth.AccountNotFoundException;
 import com.example.core.common.exception.auth.AuthenticationException;
 import com.example.core.common.exception.auth.NotLoggedInException;
 import com.example.core.common.parser.DataParser;
-import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -23,11 +22,11 @@ public class AuthenticationService {
 
     public AuthenticationService(DataParser dataParser) {
         this.dataParser = dataParser;
+        loadAccounts();
     }
 
     // 사용 전 map에 저장
-    @PostConstruct
-    private void loadAccounts() {
+    public void loadAccounts() {
         List<Account> accounts = dataParser.accounts();
         for (Account account : accounts) {
             accountMap.putIfAbsent(account.getId(), account); // 중복 x
@@ -70,7 +69,13 @@ public class AuthenticationService {
     public Account currentUser() {
         if(Objects.isNull(currentUser)) {
             log.debug("로그인 사용자 없음");
+            throw new NotLoggedInException();
         }
         return currentUser;
+    }
+
+    // 로그인 체크
+    public boolean isLogin() {
+        return Objects.nonNull(currentUser);
     }
 }
