@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.Objects;
 
 @Component
-@Profile(value = {"default", "kor"})
+@Profile(value = "!eng")
 public class KoreanOutputFormatter implements OutPutFormatter {
     @Override
     public String format(Price price, int use) {

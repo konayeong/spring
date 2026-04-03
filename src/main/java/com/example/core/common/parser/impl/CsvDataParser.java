@@ -37,10 +37,48 @@ public class CsvDataParser implements DataParser {
         }
     }
 
+    /*
+    return parser.getRecords().stream()
+        .map(record -> new Account(
+                Long.parseLong(record.get("id")),
+                record.get("name"),
+                Integer.parseInt(record.get("balance"))
+        ))
+        .toList();
+    @Override
+public List<Account> accounts() {
+    File targetFile = new File(fileProperties.getAccountPath());
+
+    try (BufferedReader br = new BufferedReader(new FileReader(targetFile))) {
+
+        CSVParser parser = CSVFormat.DEFAULT
+                .withFirstRecordAsHeader() // 첫 줄 header 사용
+                .parse(br);
+
+        List<Account> accounts = new ArrayList<>();
+
+        for (CSVRecord record : parser) {
+            Account account = new Account();
+
+            account.setId(Long.parseLong(record.get("id")));
+            account.setName(record.get("name"));
+            account.setBalance(Integer.parseInt(record.get("balance")));
+
+            accounts.add(account);
+        }
+
+        return accounts;
+
+    } catch (IOException e) {
+        log.error("CSV Account 파싱 실패", e);
+        throw new RuntimeException("account.csv 파싱 실패", e);
+    }
+}
+     */
+
     @Override
     public List<Price> prices() {
         File targetFile = new File(fileProperties.getPricePath());
-        List<Price> prices;
 
         try(BufferedReader br = new BufferedReader(new FileReader(targetFile))) {
             return new CsvToBeanBuilder<Price>(br)

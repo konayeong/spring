@@ -1,5 +1,6 @@
 package com.example.core.price.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.opencsv.bean.CsvBindByName;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,21 +9,29 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Price {
     @CsvBindByName(column = "순번")
+    @JsonProperty(value = "순번")
     private Long id;
     @CsvBindByName(column = "지자체명")
+    @JsonProperty(value = "지자체명")
     private String city;
     @CsvBindByName(column = "업종")
+    @JsonProperty(value = "업종")
     private String sector;
     @CsvBindByName(column = "단계")
+    @JsonProperty(value = "단계")
     private Long step;
     @CsvBindByName(column = "구간시작(세제곱미터)")
+    @JsonProperty(value = "구간시작(세제곱미터)")
     private Long intervalStart;
     @CsvBindByName(column = "구간끝(세제곱미터)")
+    @JsonProperty(value = "구간끝(세제곱미터)")
     private Long intervalEnd;
     @CsvBindByName(column = "구간금액(원)")
+    @JsonProperty(value = "구간금액(원)")
     private Long intervalPrice;
-//    @CsvBindByName(column = "단계별 기본요금(원)")
-//    private Long basicPrice;
+    @CsvBindByName(column = "단계별 기본요금(원)")
+    @JsonProperty(value = "단계별 기본요금(원)")
+    private Long basicPrice;
 
     public void setCity(String city) {
         this.city = city.trim();
