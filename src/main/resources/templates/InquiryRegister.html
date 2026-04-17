@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>문의하기</title>
+</head>
+<body>
+<form action="/cs/inquiry" method="post" enctype="multipart/form-data">
+    <label> 제목: <input name="title"/></label>
+    <br>
+    <label> 본문: <textarea name="content"></textarea></label>
+    <br>
+    <div class="mb-4">
+        <label for="category" class="form-label fw-bold">분류</label>
+        <select id="category" class="form-select" name="category">
+            <option value="">-- 분류를 선택해 주세요 --</option>
+
+            <option th:each="category : ${categories}"
+                    th:value="${category.getValue()}"
+                    th:text="${category.getDescription()}">
+                불만 접수
+            </option>
+        </select>
+    </div>
+    <div class="mb-5">
+        <label for="fileInput">첨부파일 (이미지 파일만 가능)</label>
+        <div class="input-group">
+            <input type="file" id="fileInput" class="form-control" name="files"
+                   accept="image/gif, image/jpeg, image/png, image/jpg" multiple>
+        </div>
+    </div>
+
+    <button type="submit">확인</button>
+</form>
+<form action="/cs/" method="get">
+    <button type="submit">취소</button>
+</form>
+</body>
+</html>

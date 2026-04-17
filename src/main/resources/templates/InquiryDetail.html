@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>문의하기 상세 내역</title>
+</head>
+<body>
+<h1>문의하기 상세 내역</h1>
+<label> 제목: <span th:text="${inquiry.title}"></span></label>
+<br>
+<label> 본문: <span th:text="${inquiry.content}"></span></label>
+<br>
+<label> 분류: <span th:text="${inquiry.category.description}"></span></label>
+<br>
+<label> 작성일: <span th:text="${inquiry.createdAt}"></span></label>
+<br>
+<label> 작성자: <span th:text="${inquiry.userId}"></span></label>
+<!-- TODO 이미지 출력 추가 -->
+</body>
+</html>

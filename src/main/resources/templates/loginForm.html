@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <link rel="stylesheet" th:href="@{/bootstrap.min.css}">
+</head>
+<body class="bg-gray-400">
+    <!-- TODO message 처리 (다국어) -->
+    <div class="container-sm">
+        <div class="row">
+            <div class="shadow-lg my-5">
+                    <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-4">Login</h1>
+                    </div>
+                    <main>
+                        <form class="align-items-center" action="/cs/login" method="post">
+                            <div class="form-group">
+                                <label for="inputId" class="form-label">ID</label>
+                                <input type="text" class="form-control" id="inputId" name="id">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="inputPassword" name="pwd">
+                            </div>
+                            <!-- TODO-R-->
+                            <p style="color : darkred; font-size: small" th:text="${errorMsg}"></p>
+                            <button type="submit" class="btn btn-primary">로그인</button>
+                        </form>
+                    </main>
+                </div>
+        </div>
+    </div>
+</body>
+</html>

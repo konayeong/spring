@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>내 문의 목록</title>
+</head>
+<body>
+    <h2><span th:text="${name}"></span> 문의 목록</h2>
+    <form action="/cs/logout" method="post">
+        <button>로그아웃</button>
+    </form>
+
+    <!-- TODO 카테고리 검색 버튼 추가 -->
+
+    <span th:if="${inquiries.isEmpty()}">
+        문의 내역이 없습니다.
+    </span>
+    <table th:unless="${inquiries.isEmpty()}">
+        <thead>
+            <tr>
+                <th>제목</th>
+                <th>분류</th>
+                <th>작성일</th>
+                <th>답변</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr th:each="inquiry : ${inquiries}"
+            th:onclick= "|location.href='@{/cs/inquiries/{inquiryId}(inquiryId=${inquiry.inquiryId})}'|"
+            style="cursor:pointer;">
+            <td th:text="${inquiry.title}"></td>
+            <td th:text="${inquiry.category.description}"></td>
+            <!-- TODO Filter : format -->
+            <td th:text="${inquiry.createdAt}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <form action="/cs/inquiry" method="get">
+        <button>문의하기</button>
+    </form>
+</body>
+</html>

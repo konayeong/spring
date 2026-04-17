@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자페이지</title>
+</head>
+<body>
+    <h2>관리자페이지</h2>
+
+    <span th:if="${inquiries.isEmpty()}">
+            문의 내역이 없습니다.
+        </span>
+    <table th:unless="${inquiries.isEmpty()}">
+        <thead>
+        <tr>
+            <th>제목</th>
+            <th>분류</th>
+            <th>작성일</th>
+            <th>답변</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="inquiry : ${inquiries}"
+            th:onclick= "|location.href='@{/cs/inquiries/{inquiryId}(inquiryId=${inquiry.inquiryId})}'|"
+            style="cursor:pointer;">
+            <td th:text="${inquiry.title}"></td>
+            <td th:text="${inquiry.category.description}"></td>
+            <td th:text="${inquiry.createdAt}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
