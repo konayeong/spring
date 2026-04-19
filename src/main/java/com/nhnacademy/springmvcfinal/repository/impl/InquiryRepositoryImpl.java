@@ -58,8 +58,45 @@ public class InquiryRepositoryImpl implements InquiryRepository {
     }
 
     @Override
-    public List<Inquiry> getInquiryListAdmin() {
-        return List.of();
+    public List<Inquiry> findUnansweredInquiries() {
+
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+
+        String sql = """
+                    SELECT i.inquiry_id, i.title, i.content, i.category, i.created_at, i.user_id
+                    FROM spring_inquiry i
+                    LEFT JOIN spring_answer a
+                        ON i.inquiry_id = a.inquiry_id
+                    WHERE a.inquiry_id IS NULL
+                    ORDER BY i.inquiry_id DESC
+                """;
+
+        List<Inquiry> result = new ArrayList<>();
+
+        try (PreparedStatement psmt = connection.prepareStatement(sql);
+             ResultSet rs = psmt.executeQuery()) {
+
+            while (rs.next()) {
+
+                Inquiry inquiry = new Inquiry(
+                        rs.getInt("inquiry_id"),
+                        rs.getString("title"),
+                        rs.getString("content"),
+                        Category.from(rs.getInt("category")),
+                        rs.getTimestamp("created_at").toLocalDateTime(),
+                        rs.getString("user_id")
+                );
+
+                result.add(inquiry);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
+        }
+
+        return result;
     }
 
     @Override

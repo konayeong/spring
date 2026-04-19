@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface InquiryRepository {
     List<Inquiry> getInquiryList(String userId, Category category);
-    List<Inquiry> getInquiryListAdmin();
+    List<Inquiry> findUnansweredInquiries();
     Inquiry getInquiry(int inquiryId);
 
     int registerInquiry(Inquiry inquiry);

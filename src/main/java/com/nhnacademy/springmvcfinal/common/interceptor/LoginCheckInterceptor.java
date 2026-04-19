@@ -7,7 +7,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.io.IOException;
 
-// TODO-Q vs Filter
 public class LoginCheckInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest req,

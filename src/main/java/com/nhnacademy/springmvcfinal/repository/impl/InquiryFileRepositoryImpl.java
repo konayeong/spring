@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -37,5 +39,38 @@ public class InquiryFileRepositoryImpl implements InquiryFileRepository {
         } finally {
             DataSourceUtils.releaseConnection(connection, dataSource);
         }
+    }
+
+    @Override
+    public List<InquiryFile> findByInquiryId(int inquiryId) {
+
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+
+        String sql = "select file_id, inquiry_id, file_name from spring_inquiry_files where inquiry_id = ?";
+
+        List<InquiryFile> result = new ArrayList<>();
+
+        try (PreparedStatement psmt = connection.prepareStatement(sql)) {
+
+            psmt.setInt(1, inquiryId);
+            try (ResultSet rs = psmt.executeQuery()) {
+                while (rs.next()) {
+                    InquiryFile file = new InquiryFile(
+                            rs.getInt("file_id"),
+                            rs.getInt("inquiry_id"),
+                            rs.getString("file_name")
+                    );
+
+                    result.add(file);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
+        }
+
+        return result;
     }
 }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문의 답변 작성</title>
+    <link rel="stylesheet" th:href="@{/bootstrap.min.css}">
+</head>
+<body class="p-3 bg-light">
+
+<div class="container my-5 p-4 bg-white rounded shadow-sm">
+    <h2 class="mb-4">문의 답변 작성</h2>
+
+    <div class="mb-3">
+        <label class="form-label">문의 제목</label>
+        <input type="text" class="form-control" th:value="${inquiry.title}" readonly>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">문의 본문</label>
+        <textarea class="form-control" rows="5" readonly th:text="${inquiry.content}"></textarea>
+    </div>
+
+    <div>
+        <h5 class="fw-bold mb-3 text-dark border-start border-3 border-primary ps-2">첨부 파일</h5>
+        <div class="d-flex flex-wrap gap-3">
+            <div th:each="file : ${inquiry.files}">
+                <img th:src="@{'/uploads/' + ${file}}"
+                     th:alt="${file}"
+                     style="max-width: 200px; max-height: 200px;">
+            </div>
+        </div>
+    </div>
+
+
+    <form th:action="@{/cs/admin/answer/{inquiryId}(inquiryId=${inquiry.inquiryId})}" method="post">
+        <div class="mb-3">
+            <h5 class="fw-bold mb-3 text-dark border-start border-3 border-primary ps-2">답변 내용</h5>
+            <textarea class="form-control" name="content" rows="5" placeholder="답변 내용을 입력하세요"></textarea>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">답변 등록</button>
+            <a th:href="@{/cs/admin}" class="btn btn-secondary">취소</a>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
+</html>

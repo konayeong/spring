@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CategoryConverter implements Converter<String, Category> {
     @Override
-    public Category convert(String source) {
+    public Category convert(String source) { // DTO에 값을 넣기 전에 실행
         return Category.from(Integer.parseInt(source));
     }
 }

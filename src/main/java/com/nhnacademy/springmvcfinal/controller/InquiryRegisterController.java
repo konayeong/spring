@@ -2,17 +2,18 @@ package com.nhnacademy.springmvcfinal.controller;
 
 import com.nhnacademy.springmvcfinal.domain.inquiry.Category;
 import com.nhnacademy.springmvcfinal.domain.user.User;
-import com.nhnacademy.springmvcfinal.domain.dto.InquiryRegisterRequest;
+import com.nhnacademy.springmvcfinal.domain.dto.req.InquiryRegisterRequest;
 import com.nhnacademy.springmvcfinal.exception.ValidationFailedException;
 import com.nhnacademy.springmvcfinal.service.InquiryService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/cs")
@@ -27,20 +28,17 @@ public class InquiryRegisterController {
         return "inquiryRegister";
     }
 
-    // TODO-Q userId가 필요할 때마다 세션에서 꺼내오는게 맞을까?
+    // userId가 필요할 때마다 세션에서 꺼내오는게 맞을까? -> @SessionAttribute
     @PostMapping("/inquiry")
-    public String registerInquiry(HttpServletRequest req,
-                               @Valid @ModelAttribute InquiryRegisterRequest request,
-                               BindingResult bindingResult) {
+    public String registerInquiry(@SessionAttribute("loginUser") User user,
+                                  @Valid @ModelAttribute InquiryRegisterRequest request,
+                                  BindingResult bindingResult,
+                                  @RequestParam List<MultipartFile> files) {
         if(bindingResult.hasErrors()) {
             throw new ValidationFailedException();
         }
-        // inquiry 등록
-        HttpSession session = req.getSession(false);
-        User user = (User) session.getAttribute("loginUser");
-        String userId = user.getUserId();
 
-        inquiryService.registerInquiry(userId, request);
+        inquiryService.registerInquiry(user.getUserId(), request, files);
 
         return "redirect:/cs/";
     }

@@ -7,25 +7,31 @@ import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    // TODO error 출력이 안되고 있는 것 같다 + 코드 정리 필요
-    @ExceptionHandler(value = {ValidationFailedException.class, BadRequestException.class})
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({ValidationFailedException.class, BadRequestException.class})
     public String handleBadRequest(Exception ex, Model model) {
-        model.addAttribute("error", ex.getMessage());
-        model.addAttribute("code", HttpStatus.BAD_REQUEST);
+        return handleException(ex, model, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public String handleNotFound(Exception ex, Model model) {
+        return handleException(ex, model, HttpStatus.NOT_FOUND);
+    }
+
+    private String handleException(Exception ex, Model model, HttpStatus status) {
+        model.addAttribute("error", ex.getMessage() != null ? ex.getMessage() : defaultMessage(status));
+        model.addAttribute("code", status.value());
         return "error";
     }
 
-    @ExceptionHandler(value = {NotFoundException.class})
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handleNotFound(Exception ex, Model model) {
-        model.addAttribute("error", ex.getMessage());
-        model.addAttribute("code", HttpStatus.NOT_FOUND);
-        return "error";
+    private String defaultMessage(HttpStatus status) {
+        return switch (status) {
+            case BAD_REQUEST -> "잘못된 요청입니다.";
+            case NOT_FOUND -> "요청한 리소스를 찾을 수 없습니다.";
+            default -> "서버 오류가 발생했습니다.";
+        };
     }
 }

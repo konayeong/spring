@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>문의하기</title>
+
+    <link rel="stylesheet" th:href="@{/bootstrap.min.css}">
+</head>
+
+<body class="bg-light">
+
+<div class="container py-5" style="max-width: 650px;">
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <h4 class="mb-4">문의하기</h4>
+
+            <form action="/cs/inquiry" method="post" enctype="multipart/form-data">
+
+                <!-- 제목 -->
+                <div class="mb-3">
+                    <label class="form-label">제목</label>
+                    <input type="text" name="title" class="form-control">
+                </div>
+
+                <!-- 내용 -->
+                <div class="mb-3">
+                    <label class="form-label">내용</label>
+                    <textarea name="content" class="form-control" rows="6"></textarea>
+                </div>
+
+                <!-- 카테고리 -->
+                <div class="mb-3">
+                    <label class="form-label">분류</label>
+                    <select name="category" class="form-select">
+                        <option value="">-- 분류를 선택해 주세요 --</option>
+
+                        <option th:each="category : ${categories}"
+                                th:value="${category.getValue()}"
+                                th:text="${category.getDescription()}">
+                        </option>
+                    </select>
+                </div>
+
+                <!-- 파일 -->
+                <div class="mb-4">
+                    <label class="form-label">첨부파일 (이미지)</label>
+                    <input type="file"
+                           name="files"
+                           class="form-control"
+                           accept="image/*"
+                           multiple>
+                </div>
+
+                <!-- 버튼 -->
+                <div class="d-flex justify-content-between">
+                    <a href="/cs/" class="btn btn-outline-secondary">취소</a>
+                    <button type="submit" class="btn btn-primary">등록</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
