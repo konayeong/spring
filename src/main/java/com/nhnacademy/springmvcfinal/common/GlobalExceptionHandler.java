@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+// TODO-E : 오류 출력 안되는중
 @ControllerAdvice
 public class GlobalExceptionHandler {
 

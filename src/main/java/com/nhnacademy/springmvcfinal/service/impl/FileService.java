@@ -8,8 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
-@Service
 @Slf4j
+@Service
 public class FileService {
     private static final String UPLOAD_DIR = System.getProperty("user.dir") + "/uploads/";
 
@@ -19,7 +19,10 @@ public class FileService {
             if (!dir.exists()) dir.mkdirs();
             
             String original = file.getOriginalFilename();
-            String ext = original != null ? original.substring(original.lastIndexOf(".")) : null;
+            String ext = "";
+            if (original != null && original.contains(".")) {
+                ext = original.substring(original.lastIndexOf("."));
+            }
 
             String fileName = UUID.randomUUID() + ext;
             log.debug("[File Save] file name : {}", file.getOriginalFilename());

@@ -1,6 +1,7 @@
 package com.nhnacademy.springmvcfinal.domain.inquiry;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDateTime;
 

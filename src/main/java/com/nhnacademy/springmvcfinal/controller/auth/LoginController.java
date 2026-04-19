@@ -4,7 +4,6 @@ import com.nhnacademy.springmvcfinal.domain.user.Role;
 import com.nhnacademy.springmvcfinal.domain.user.User;
 import com.nhnacademy.springmvcfinal.domain.dto.req.LoginRequest;
 import com.nhnacademy.springmvcfinal.exception.LoginFailedException;
-import com.nhnacademy.springmvcfinal.exception.ValidationFailedException;
 import com.nhnacademy.springmvcfinal.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -40,7 +39,7 @@ public class LoginController {
                           Model model,
                           Locale locale) {
         if (bindingResult.hasErrors()) {
-            throw new ValidationFailedException();
+            return "loginForm"; // TODO-Q 이걸 추천하는데 이유를 잘 모르겠음
         }
 
         try{
