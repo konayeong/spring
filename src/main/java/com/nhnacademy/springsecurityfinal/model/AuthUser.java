@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
-// TODO
 public class AuthUser implements UserDetails, OAuth2User {
 
     private final String username;

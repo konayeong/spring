@@ -2,6 +2,7 @@ package com.nhnacademy.springsecurityfinal.config;
 
 import com.nhnacademy.springsecurityfinal.config.converter.CsvHttpMessageReadConverter;
 import com.nhnacademy.springsecurityfinal.config.converter.CsvHttpMessageWriteConverter;
+import com.nhnacademy.springsecurityfinal.config.resolver.PageableResolver;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverters;

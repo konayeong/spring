@@ -1,4 +1,4 @@
-package com.nhnacademy.springsecurityfinal.config;
+package com.nhnacademy.springsecurityfinal.config.resolver;
 
 import org.jspecify.annotations.Nullable;
 import org.springframework.core.MethodParameter;
