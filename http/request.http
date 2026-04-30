@@ -1,0 +1,36 @@
+### 회원가입 (admin) json
+POST localhost:8080/signup
+Content-Type: application/json
+
+{
+  "id": "admin",
+  "name": "관리자",
+  "password": "1234",
+  "age": 20,
+  "role" : "ADMIN"
+}
+
+### 회원가입 (member) csv
+POST localhost:8080/signup
+Content-Type: text/csv
+
+id,name,password,age,role
+member,유저,qwer,22,MEMBER
+
+### 회원 조회 (json)
+GET localhost:8080/members?id=admin
+Accept: application/json
+
+### 회원 조회 (xml)
+// TODO 얘는 왜 role이 대문자로 출력 ?
+GET localhost:8080/members?id=admin
+Accept: application/xml
+
+### 회원 조회 (csv)
+GET localhost:8080/members?id=admin
+Accept: text/csv
+
+### 회원 리스트 조회
+GET localhost:8080/members?page=1
+Accept: application/json
+
