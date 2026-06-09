@@ -4,7 +4,6 @@
 
 <details>
 <summary style="font-weight: bold; font-size: x-large">Step1. Spring AI 환경 설정</summary>
-<div>
 
 ### LLM (Large Language Model, 대규모 언어 모델)
 
@@ -36,28 +35,22 @@
   - Gemini : 속도 빠름, 유료, 실시간 검색/운영 환경
 - `@Tool` : LLM이 호출할 수 있는 함수 정의
 - `@ToolParam` : Tool 파라미터 설명
-</div>
 </details>
 
 <details style="margin-top: 20px">
 <summary style="font-weight: bold; font-size: x-large">Step2. ChatClient 기초와 LLM 연동</summary>
-<div>
 
 ### ChatClient
-
 > Spring AI에서 LLM과 대화하기 위한 유창한 API를 제공하는 인터페이스
->
 - SDK마다 사용법이 달라 모델 교체 시 코드 대폭 수정
 - ChatClient를 사용함으로써 모델 교체도 설정만 변경, 코드는 그대로
 
 #### 설계 원칙
-
 - Fluent API : 메서드 체이닝으로 직관적인 코드 작성
 - Builder Pattern
 - 불변성 : 각 호출은 독립적이고 부작용이 없음
 
 #### ChatClient API 상세 분석
-
 - 메서드 체이닝
     - `chatClient.prompt().user("질문").call().content();`
         - prompt() : 프롬프트 빌더 시작
@@ -66,7 +59,6 @@
         - content() : 응답 내용 추출
 
 #### 고급 기능
-
 1. 시스템 프롬프트 설정
     - `.system()`
 2. 대화 기록 유지
@@ -78,9 +70,7 @@
     - `.entity(class)` : JSON → 자바 객체
 
 ### curl
-
 > Spring API를 브라우저 없이 터미널에서 직접 호출하는 도구
->
 - 하는 일
     - HTTP 요청 생성 : GET / POST 등
     - 서버 호출 : URL로 요청 전송
@@ -90,5 +80,66 @@
     ```bash
     curl -G "http://localhost:8080/api/chat/ollama" --data-urlencode "question=안녕하세요 반갑습니다"
     ```
-</div>
+</details>
+
+<details style="margin-top: 20px">
+<summary style="font-weight: bold; font-size: x-large">Step3. Function Calling 기초</summary>
+
+### Function Calling
+> LLM이 자연어 질문을 분석하여 적절한 자바 메서드를 자동으로 호출하는 기술
+
+#### 작동 원리
+1. LLM의 추론 (Reasoning)
+    - 의도 파악, 함수 선택, 파라미터 추출
+2. 함수 호출 (Function Invocation)
+    - LLM의 결정에 따라 실제 자바 메서드 호출
+3. 결과 통합 (Response Synthesis)
+    - 함수 실행 결과를 사용자에게 자연어로 설명
+
+#### 장점
+- 자연어 인터페이스 : 사용자가 복잡한 API 몰라도 됨
+- 자동 파라미터 추출
+- 유연한 Tool 선택
+- 확장성 : 새로운 Tool 추가가 쉬움
+
+#### 패턴
+1. 단일 Tool
+2. 다중 Tool (Chaining)
+    ```
+    사용자 → LLM → Tool1 → 결과1 → LLM → Tool2 → 결과2 → 응답
+    ```
+
+3. 병렬 Tool 호출
+    ```
+    사용자 → LLM → Tool1 ─┐
+                    ├→ 결과 통합 → 응답
+                    → Tool2 ─┘
+    ```
+
+### Tool
+#### `@Tool`
+- LLM이 이 메서드를 호출할 수 있게 함
+- description : LLM이 이 함수가 무엇을 하는지 설명
+    - 좋은 Description의 조건
+        - 명확성 : 무엇을 하는지 명확히 설명
+        - 파라미터 설명 : 각 파라미터의 역할 설명
+        - 반환값 설명 : 무엇을 반환하는지 설명
+        - 사용 예시 : 언제 사용하는지 예시
+
+#### `@ToolParam`
+- 파라미터에 대한 설명
+- description : 파라미터에 대한 설명
+- required : 필수 파라미터 여부 (기본값: ture)
+
+#### 등록 방법
+
+- ChatClient.Builder에 등록 [권장]
+- 여러 Tool 등록
+- 패키지 스캔 (자동 등록)
+</details>
+
+<details style="margin-top: 20px">
+<summary style="font-weight: bold; font-size: x-large">Next</summary>
+
+
 </details>
