@@ -38,3 +38,57 @@
 - `@ToolParam` : Tool 파라미터 설명
 </div>
 </details>
+
+<details style="margin-top: 20px">
+<summary style="font-weight: bold; font-size: x-large">Step2. ChatClient 기초와 LLM 연동</summary>
+<div>
+
+### ChatClient
+
+> Spring AI에서 LLM과 대화하기 위한 유창한 API를 제공하는 인터페이스
+>
+- SDK마다 사용법이 달라 모델 교체 시 코드 대폭 수정
+- ChatClient를 사용함으로써 모델 교체도 설정만 변경, 코드는 그대로
+
+#### 설계 원칙
+
+- Fluent API : 메서드 체이닝으로 직관적인 코드 작성
+- Builder Pattern
+- 불변성 : 각 호출은 독립적이고 부작용이 없음
+
+#### ChatClient API 상세 분석
+
+- 메서드 체이닝
+    - `chatClient.prompt().user("질문").call().content();`
+        - prompt() : 프롬프트 빌더 시작
+        - user() : 사용자 질문 설정
+        - call() : LLM 호출 (동기)
+        - content() : 응답 내용 추출
+
+#### 고급 기능
+
+1. 시스템 프롬프트 설정
+    - `.system()`
+2. 대화 기록 유지
+    - `messages(history) : List<Message> history`
+3. 스트리밍 응답
+    - `.stream()`
+    - `.forEach(chunk → {})` : 토큰 단위 출력 가능
+4. 구조화된 응답 (Entity)
+    - `.entity(class)` : JSON → 자바 객체
+
+### curl
+
+> Spring API를 브라우저 없이 터미널에서 직접 호출하는 도구
+>
+- 하는 일
+    - HTTP 요청 생성 : GET / POST 등
+    - 서버 호출 : URL로 요청 전송
+    - 응답 출력 : JSON / 텍스트 그대로 출력
+- curl 자동 인코딩
+
+    ```bash
+    curl -G "http://localhost:8080/api/chat/ollama" --data-urlencode "question=안녕하세요 반갑습니다"
+    ```
+</div>
+</details>
