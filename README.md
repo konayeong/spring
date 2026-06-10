@@ -139,7 +139,79 @@
 </details>
 
 <details style="margin-top: 20px">
-<summary style="font-weight: bold; font-size: x-large">Next</summary>
+<summary style="font-weight: bold; font-size: x-large">Step4. Tool Callback</summary>
+
+보류
+</details>
+
+<details style="margin-top: 20px">
+<summary style="font-weight: bold; font-size: x-large">Step5.다중 Function Calling과 MCP Tool 패턴</summary>
+
+### MCP Tool 패턴
+
+> LLM이 사용할 수 있는 도구를 체계적으로 설계하고 구현하는 패턴
+>
+
+#### 핵심 원칙
+
+- 단일 책임, 명확한 인터페이스, 독립성, 재사용성
+
+#### 등록
+
+- 명시적 등록 (권장)
+- 자동 스캔
+
+    ```java
+    @Configuration
+    public class ChatClientConfig {
+    
+        @Bean
+        @Primary
+        public ChatClient.Builder ollamaChatClientBuilder(
+                @Qualifier("ollamaChatModel") ChatModel ollamaChatModel,
+                ApplicationContext context) {
+    
+            // 모든 @Tool 빈 자동 수집
+            Map<String, Object> tools = context.getBeansWithAnnotation(Component.class);
+            List<Object> toolList = tools.values().stream()
+                    .filter(bean -> hasToolMethods(bean.getClass()))
+                    .toList();
+    
+            return ChatClient.builder(ollamaChatModel)
+                    .defaultTools(toolList.toArray(new Object[0]));
+        }
+    
+        private boolean hasToolMethods(Class<?> clazz) {
+            return Arrays.stream(clazz.getMethods())
+                    .anyMatch(method -> method.isAnnotationPresent(Tool.class));
+        }
+    }
+    ```
 
 
+#### Tool Description 최적화 (5가지 원칙)
+
+- 무엇을 하는지
+- 언제 사용하는지
+- 파라미터 설명
+- 반환값 설명
+- 제한 사항
+
+#### Tool 설계 패턴
+
+- 조회 Tool (Read-Only) : 여러 번 호출해도 안전
+- 명령 Tool (Command) : 한 번만 호출해야 함, 권한 체크 필요
+- 필터링 Tool
+
+#### Tool 성능 최적화
+
+- 결과 제한
+- 비동기 실행
+- 캐싱
+</details>
+
+<details style="margin-top: 20px">
+<summary style="font-weight: bold; font-size: x-large">Step6. 항공편 검색 Tool 구현</summary>
+
+보류
 </details>
