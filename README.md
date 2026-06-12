@@ -141,7 +141,12 @@
 <details style="margin-top: 20px">
 <summary style="font-weight: bold; font-size: x-large">Step4. Tool Callback</summary>
 
-보류
+### Tool Calling Callback
+> Function Calling의 모든 단계를 가로채서 로깅, 모니터링, 수정할 수 있는 인터페이스
+- 등록 : ChatClient에 주입 받아서 등록
+  - `.defaultAdvisor(new SimpleLoggerAdvisor());` 
+- Advisor
+  - LLM 호출 전/후의 데이터를 가공하거나 보강할 수 있는 인터셉터 역할  
 </details>
 
 <details style="margin-top: 20px">
