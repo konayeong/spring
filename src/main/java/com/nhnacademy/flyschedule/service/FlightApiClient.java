@@ -1,16 +1,17 @@
-package com.nhnacademy.flyschedule.client;
+package com.nhnacademy.flyschedule.service;
 
 import com.nhnacademy.flyschedule.config.ApiProperties;
+import com.nhnacademy.flyschedule.dto.AirlineInfoResponse;
+import com.nhnacademy.flyschedule.dto.AirportInfoResponse;
 import com.nhnacademy.flyschedule.dto.ApiResponseWrapper;
 import com.nhnacademy.flyschedule.dto.FlightInfoResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriBuilder;
-
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
@@ -21,8 +22,9 @@ import java.util.List;
  * - 기능이 적기 때문에 service 분리는 하지 않음
  * - Repository, 외부 데이터 소스 접근
  */
+// TODO-Q @Component아니고 @Service로 설정 이유는 ?
 @Slf4j
-@Component
+@Service
 @RequiredArgsConstructor
 public class FlightApiClient {
     private final ApiProperties apiProperties;
@@ -56,6 +58,44 @@ public class FlightApiClient {
         }
 
         log.error("항공편 조회 에러 : {} - {}", wrapper.getResultCode(), wrapper.getResultMessage());
+        return Collections.emptyList();
+    }
+
+    /**
+     * 공항 목록 조회
+     */
+    public List<AirportInfoResponse> getAirportList() {
+        ApiResponseWrapper<AirportInfoResponse> wrapper = restClient.get()
+                .uri(uriBuilder ->
+                        addCommonParam(uriBuilder)
+                                .path("/GetArprtList")
+                                .build()).retrieve()
+                .body(new ParameterizedTypeReference<ApiResponseWrapper<AirportInfoResponse>>() {});
+
+        if(wrapper.isSuccess()) {
+            log.info("공항 목록 조회 완료 {}개", wrapper.getTotalCount());
+            return wrapper.getItems();
+        }
+        log.error("공항 목록 조회 에러 : {} - {}", wrapper.getResultCode(), wrapper.getResultMessage());
+        return Collections.emptyList();
+    }
+
+    /**
+     * 항공사 목록 조회
+     */
+    public List<AirlineInfoResponse> getAirlineList() {
+        ApiResponseWrapper<AirlineInfoResponse> wrapper = restClient.get()
+                .uri(uriBuilder ->
+                        addCommonParam(uriBuilder)
+                                .path("/GetAirmanList")
+                                .build()).retrieve()
+                .body(new ParameterizedTypeReference<ApiResponseWrapper<AirlineInfoResponse>>() {});
+
+        if(wrapper.isSuccess()) {
+            log.info("항공사 목록 조회 완료 {}개", wrapper.getTotalCount());
+            return wrapper.getItems();
+        }
+        log.error("항공사 목록 조회 에러 : {} - {}", wrapper.getResultCode(), wrapper.getResultMessage());
         return Collections.emptyList();
     }
 

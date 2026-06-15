@@ -2,6 +2,8 @@ package com.nhnacademy.flyschedule.config;
 
 import com.nhnacademy.flyschedule.mcp.CalculatorTool;
 import com.nhnacademy.flyschedule.mcp.DateTimeTool;
+import com.nhnacademy.flyschedule.tool.AirlineInfoTool;
+import com.nhnacademy.flyschedule.tool.AirportInfoTool;
 import com.nhnacademy.flyschedule.tool.FlightSearchTool;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatModel;
@@ -26,19 +28,20 @@ public class ChatClientConfig {
     @Bean(name = "ollamaChatClientBuilder")
     @Primary
     public ChatClient.Builder ollamaChatClientBuilder(@Qualifier("ollamaChatModel") ChatModel ollamaChatModel,
-                                                      CalculatorTool calculatorTool,
-                                                      DateTimeTool dateTimeTool,
-                                                      FlightSearchTool flightSearchTool) {
+                                                      FlightSearchTool flightSearchTool,
+                                                      AirportInfoTool airportInfoTool,
+                                                      AirlineInfoTool airlineInfoTool) {
         return ChatClient.builder(ollamaChatModel)
-                .defaultTools(calculatorTool, dateTimeTool, flightSearchTool);
+                .defaultTools(flightSearchTool, airportInfoTool, airlineInfoTool);
     }
 
     @Bean(name = "geminiChatClientBuilder")
     public ChatClient.Builder geminiChatClientBuilder(@Qualifier("googleGenAiChatModel") ChatModel geminiChatModel,
-                                                      DateTimeTool dateTimeTool,
-                                                      FlightSearchTool flightSearchTool) {
+                                                      FlightSearchTool flightSearchTool,
+                                                      AirportInfoTool airportInfoTool,
+                                                      AirlineInfoTool airlineInfoTool) {
         return ChatClient.builder(geminiChatModel)
-                .defaultTools(dateTimeTool, flightSearchTool);
+                .defaultTools(flightSearchTool, airportInfoTool, airlineInfoTool);
     }
 
 }

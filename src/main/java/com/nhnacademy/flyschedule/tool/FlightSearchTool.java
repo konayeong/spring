@@ -1,17 +1,13 @@
 package com.nhnacademy.flyschedule.tool;
 
 import com.nhnacademy.flyschedule.agent.FlightSearchAgent;
-import com.nhnacademy.flyschedule.client.FlightApiClient;
 import com.nhnacademy.flyschedule.dto.FlightInfoResponse;
 import com.nhnacademy.flyschedule.mcp.ToolResultCapture;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.stereotype.Component;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

@@ -1,6 +1,6 @@
 package com.nhnacademy.flyschedule.agent;
 
-import com.nhnacademy.flyschedule.client.FlightApiClient;
+import com.nhnacademy.flyschedule.service.FlightApiClient;
 import com.nhnacademy.flyschedule.dto.FlightInfoResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

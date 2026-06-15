@@ -251,8 +251,26 @@
 <details style="margin-top: 20px">
 <summary style="font-weight: bold; font-size: x-large">Step7. 공항/항공사 정보 Tool 구현</summary>
 
+### 에이전트 위임(Delegation) 패턴
+> MCP Tool이 직접 비즈니스 로직을 수행하지 않고, 전문화된 에이전트 클래스에게 작업을 위임하는 설계 패턴
+
+#### 장점
+- 단일 책임 : Tool은 진입점만 담당, Agent가 실제 작업 수행
+- 재사용성 : Agent를 여러 Tool에서 공유 가능
+- 테스트 용이
+- 확장성
+
+### 전체 아키텍처 - 계층별 책임
+- MCP Tool : LLM 진입점, `@Tool` 어노테이션 결과 제한, ToolResultCapture
+- Agent : 작업 조율, 하위 에이전트 호출
+- 전문 Agent : 단일 기능 수행
+- Service : 외부 API 호출, 응답 파싱
 </details>
 
+<details style="margin-top: 20px">
+<summary style="font-weight: bold; font-size: x-large">Step8. </summary>
+
+</details>
 
 ### 구현 후 할 일
 - sonarQube-issue 해결
