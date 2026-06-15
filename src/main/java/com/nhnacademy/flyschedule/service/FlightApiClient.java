@@ -73,9 +73,9 @@ public class FlightApiClient {
                 .body(new ParameterizedTypeReference<ApiResponseWrapper<AirportInfoResponse>>() {});
 
         if(wrapper.isSuccess()) {
-            log.info("공항 목록 조회 완료 {}개", wrapper.getTotalCount());
             return wrapper.getItems();
         }
+
         log.error("공항 목록 조회 에러 : {} - {}", wrapper.getResultCode(), wrapper.getResultMessage());
         return Collections.emptyList();
     }
@@ -92,7 +92,6 @@ public class FlightApiClient {
                 .body(new ParameterizedTypeReference<ApiResponseWrapper<AirlineInfoResponse>>() {});
 
         if(wrapper.isSuccess()) {
-            log.info("항공사 목록 조회 완료 {}개", wrapper.getTotalCount());
             return wrapper.getItems();
         }
         log.error("항공사 목록 조회 에러 : {} - {}", wrapper.getResultCode(), wrapper.getResultMessage());

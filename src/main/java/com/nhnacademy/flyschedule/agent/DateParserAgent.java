@@ -8,6 +8,7 @@ import java.time.format.DateTimeParseException;
 
 /**
  * 자연어 날짜 표현을 API 요청 형식(yyyyMMdd)로 변환
+ * 지원하는 표헌 : "오늘", "내일", "모레", "글피", "yyyy-MM-dd"
  */
 @Slf4j
 @Service
@@ -16,18 +17,17 @@ public class DateParserAgent {
     private static final DateTimeFormatter INPUT_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public String parseDate(String dateInput) {
+        log.info("[DateParserAgent] 날짜 파싱 요청 {}", dateInput);
         if(dateInput == null || dateInput.isBlank()) {
             return LocalDate.now().format(API_DATE_FORMATTER);
         }
 
         String normalized = dateInput.trim();
 
-        // 이미 API 형식과 동일 (yyyyMMdd)
+        // 이미 API 형식과 동일 (yyyyMMdd, 숫자 8자리)
         if(normalized.matches("\\d{8}")) {
             return normalized;
         }
-
-        normalized = normalized.toLowerCase();
 
         return switch (normalized) {
             case "오늘" -> LocalDate.now().format(API_DATE_FORMATTER);

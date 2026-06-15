@@ -268,7 +268,41 @@
 </details>
 
 <details style="margin-top: 20px">
-<summary style="font-weight: bold; font-size: x-large">Step8. </summary>
+<summary style="font-weight: bold; font-size: x-large">Step8. A2A 개념과 단일 에이전트 구현 </summary>
+
+### A2A (Agent-to-Agent)
+> 여러 전문화된 에이전트가 협력하여 복잡한 작업을 해결하는 패턴
+
+#### 통신 패턴
+1. 순차적 통신 : 한 에이전트의 결과를 다른 에이전트의 입력으로 전달
+2. 병렬 통신
+3. 파이프라인 : 중간 결과를 계속 흘려보냄
+
+#### Agent
+> 자율적으로 행동하고 목표를 달성하기 위해 환경과 상호작용하는 소프트웨어 객체
+- 특징
+    - 자율성 : 스스로 결정하고 행동
+    - 반응성 : 환경 변화에 즉시 대응
+    - 능동성 : 목표 달성을 위해 주도적 행동
+    - 사회성 : 다른 Agent와 협력
+
+#### Agent vs Service
+- Service : 여러 기능 포함 가능, Controller → Service
+- Agent : 단일 책임 (SRP), Coordinator → Agent
+
+### A2A vs MCP Tool
+| 항목 | MCP Tool | A2A Agent |
+| --- | --- | --- |
+| 호출자 | LLM이 직접 호출 | Coordinator가 호출 |
+| 제어권 | LLM이 가짐 | Coordinator가 가짐 |
+| 복잡도 | 단일 기능 | 복합 기능 |
+| 통신 방식 | LLM → Tool | Agent → Agent |
+| 용도 | 간단한 함수 호출 | 복잡한 작업 흐름 |
+</details>
+
+<details style="margin-top: 20px">
+<summary style="font-weight: bold; font-size: x-large">Step9. Multi-Agent Orchestration 패턴</summary>
+
 
 </details>
 

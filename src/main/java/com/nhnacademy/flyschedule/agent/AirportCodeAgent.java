@@ -5,7 +5,6 @@ import com.nhnacademy.flyschedule.dto.AirportInfoResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +18,7 @@ import java.util.Map;
 public class AirportCodeAgent {
     private final FlightApiClient flightApiClient;
     private Map<String, String> AIRPORT_CODE_MAP = new HashMap<>();
-
+    // TODO 예제 - static 블록으로 매핑 테이블 초기화 -> 어떤 방법이 더 괜찮은건지 ?
     public String getAirportCode(String airportName) {
         if(airportName == null || airportName.isBlank()) {
             throw new IllegalArgumentException("공항 이름을 입력해주세요.");
