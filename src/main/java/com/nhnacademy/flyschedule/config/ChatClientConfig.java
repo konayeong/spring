@@ -2,6 +2,7 @@ package com.nhnacademy.flyschedule.config;
 
 import com.nhnacademy.flyschedule.mcp.CalculatorTool;
 import com.nhnacademy.flyschedule.mcp.DateTimeTool;
+import com.nhnacademy.flyschedule.tool.FlightSearchTool;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,16 +27,18 @@ public class ChatClientConfig {
     @Primary
     public ChatClient.Builder ollamaChatClientBuilder(@Qualifier("ollamaChatModel") ChatModel ollamaChatModel,
                                                       CalculatorTool calculatorTool,
-                                                      DateTimeTool dateTimeTool) {
+                                                      DateTimeTool dateTimeTool,
+                                                      FlightSearchTool flightSearchTool) {
         return ChatClient.builder(ollamaChatModel)
-                .defaultTools(calculatorTool, dateTimeTool);
+                .defaultTools(calculatorTool, dateTimeTool, flightSearchTool);
     }
 
     @Bean(name = "geminiChatClientBuilder")
     public ChatClient.Builder geminiChatClientBuilder(@Qualifier("googleGenAiChatModel") ChatModel geminiChatModel,
-                                                      DateTimeTool dateTimeTool) {
+                                                      DateTimeTool dateTimeTool,
+                                                      FlightSearchTool flightSearchTool) {
         return ChatClient.builder(geminiChatModel)
-                .defaultTools(dateTimeTool);
+                .defaultTools(dateTimeTool, flightSearchTool);
     }
 
 }

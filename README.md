@@ -150,12 +150,11 @@
 </details>
 
 <details style="margin-top: 20px">
-<summary style="font-weight: bold; font-size: x-large">Step5.다중 Function Calling과 MCP Tool 패턴</summary>
+<summary style="font-weight: bold; font-size: x-large">Step5. 다중 Function Calling과 MCP Tool 패턴</summary>
 
 ### MCP Tool 패턴
 
 > LLM이 사용할 수 있는 도구를 체계적으로 설계하고 구현하는 패턴
->
 
 #### 핵심 원칙
 
@@ -218,5 +217,43 @@
 <details style="margin-top: 20px">
 <summary style="font-weight: bold; font-size: x-large">Step6. 항공편 검색 Tool 구현</summary>
 
-보류
+### RestClient
+> 동기식 HTTP 클라이언트를 위한 현대적인 API
+
+#### RestClient vs RestTemplate vs WebClient
+
+| **항목** | **RestTemplate** | **WebClient** | **RestClient** |
+| --- | --- | --- | --- |
+| **출시** | Spring 3.x | Spring 5.x | Spring 6.1 |
+| **스타일** | 명령형 | 반응형 | 유창한 API |
+| **차단/비차단** | 차단(Blocking) | 비차단(Non-blocking) | 차단(Blocking) |
+| **복잡도** | 복잡함 | 중간 | 간결함 |
+| **권장 사용** | 레거시 | 비동기 필요 시 | 일반적인 HTTP 호출 |
+
+#### ApiProperties.java
+
+- application.yml에 있는 설정값을 타입 안전하게 관리하기 위함
+- 장점
+    - 설정값을 한 곳에서 관리
+    - 설정이 늘어나도 코드가 깔끔
+    - 타입 변환을 자동으로 해줌
+
+### Agent
+
+> 각 에이전트가 **하나의 변환/처리만** 담당
+
+#### 코디네이터 에이전트
+
+- 하위 에이전트를 조율하여 항공편 검색 작업을 수행하는 에이전트
+- 어떤 순서로 어떤 에이전트를 호출할지 조율
 </details>
+
+<details style="margin-top: 20px">
+<summary style="font-weight: bold; font-size: x-large">Step7. 공항/항공사 정보 Tool 구현</summary>
+
+</details>
+
+
+### 구현 후 할 일
+- sonarQube-issue 해결
+- TODO-R : 리팩토링
