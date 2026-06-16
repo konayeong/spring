@@ -21,7 +21,7 @@ import java.util.Map;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class FlightSearchTool {
+public class FlightSearchTool implements AiTool{
 
     private final FlightSearchAgent flightSearchAgent;
 

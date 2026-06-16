@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Step3. Function Calling 실습
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/test/function-calling")
@@ -14,9 +17,8 @@ public class FunctionCallTestController {
     private final FunctionCallTestService functionCallTestService;
 
     /**
-     * Function Calling 테스트
      * GET /api/test/function-calling?message=10과20의합은?
-     * - 알맞는 tool을 찾아서 응답값을 가져온다.
+     * - 적합한 tool을 찾아서 응답값을 가져온다.
      */
     @GetMapping
     public String testFunctionCalling(@RequestParam("message") String message) {

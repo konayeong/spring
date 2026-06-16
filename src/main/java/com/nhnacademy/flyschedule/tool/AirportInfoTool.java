@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class AirportInfoTool {
+public class AirportInfoTool implements AiTool{
     private final AirportListAgent airportListAgent;
 
     /**

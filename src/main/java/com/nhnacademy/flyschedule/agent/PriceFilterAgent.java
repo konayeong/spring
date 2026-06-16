@@ -15,7 +15,9 @@ import java.util.stream.Collectors;
 public class PriceFilterAgent {
 
     public List<FlightInfoResponse> filterByPriceRange(List<FlightInfoResponse> flights, Integer minPrice, Integer maxPrice) {
+        log.info("[PriceFilterAgent] 가격 범위 내의 항공편 필터링 시작");
         if (flights == null || flights.isEmpty()) {
+            log.warn("항공편이 비어있습니다.");
             return List.of();
         }
 
@@ -27,20 +29,5 @@ public class PriceFilterAgent {
                     return maxPrice == null || price <= maxPrice;
                 })
                 .collect(Collectors.toList());
-    }
-
-    public FlightInfoResponse findCheapest(List<FlightInfoResponse> flights) {
-        return flights.stream()
-                .filter(f -> f.economyCharge() != null && f.economyCharge() > 0)
-                .min((f1, f2) -> f1.economyCharge().compareTo(f2.economyCharge()))
-                .orElse(null);
-    }
-
-    public double calculateAveragePrice(List<FlightInfoResponse> flights) {
-        return flights.stream()
-                .filter(f -> f.economyCharge() != null && f.economyCharge() > 0)
-                .mapToInt(FlightInfoResponse::economyCharge)
-                .average()
-                .orElse(0.0);
     }
 }

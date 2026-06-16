@@ -22,7 +22,6 @@ import java.util.List;
  * - 기능이 적기 때문에 service 분리는 하지 않음
  * - Repository, 외부 데이터 소스 접근
  */
-// TODO-Q @Component아니고 @Service로 설정 이유는 ?
 @Slf4j
 @Service
 @RequiredArgsConstructor

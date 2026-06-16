@@ -12,7 +12,7 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class AirlineInfoTool {
+public class AirlineInfoTool implements AiTool{
     private final AirlineListAgent airlineListAgent;
 
     @Tool(

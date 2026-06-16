@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * HTTP 요청을 받아 Service를 호출하고 결과를 반환
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/chat")
