@@ -12,8 +12,6 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriBuilder;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,14 +36,13 @@ public class FlightApiClient {
      * @return : List<항공편>
      */
     public List<FlightInfoResponse> getFlightSchedule(String depAirportId, String arrAirportId, String date) {
-        // TODO Exception
         ApiResponseWrapper<FlightInfoResponse> wrapper = restClient.get()
                 .uri(uriBuilder ->
                         addCommonParam(uriBuilder)
                                 .path("/GetFlightOpratInfoList")
-                                .queryParam("depAirportId", encodeParam(depAirportId))
-                                .queryParam("arrAirportId", encodeParam(arrAirportId))
-                                .queryParam("depPlandTime", encodeParam(date))
+                                .queryParam("depAirportId", depAirportId)
+                                .queryParam("arrAirportId", arrAirportId)
+                                .queryParam("depPlandTime", date)
                                 .build()).retrieve()
                 .body(new ParameterizedTypeReference<>() {
                 });
@@ -53,7 +50,6 @@ public class FlightApiClient {
         if (wrapper.isSuccess()) {
             log.info("항공편 {}건 조회 완료", wrapper.getTotalCount());
             return wrapper.getItems();
-
         }
 
         log.error("항공편 조회 에러 : {} - {}", wrapper.getResultCode(), wrapper.getResultMessage());
@@ -103,17 +99,5 @@ public class FlightApiClient {
     private UriBuilder addCommonParam(UriBuilder uriBuilder) {
         return uriBuilder.queryParam("serviceKey", apiProperties.getServiceKey())
                 .queryParam("_type", "json");
-    }
-
-    /**
-     * 파라미터 URL 인코딩
-     */
-    private String encodeParam(String param) {
-        try {
-            return URLEncoder.encode(param, StandardCharsets.UTF_8);
-        }catch (Exception e) {
-            log.warn("파라미터 인코딩 실패 : {}", param);
-            return param;
-        }
     }
 }

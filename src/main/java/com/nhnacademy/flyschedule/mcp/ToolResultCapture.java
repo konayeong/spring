@@ -10,6 +10,7 @@ import java.util.Map;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ToolResultCapture {
+    // ThreadLocal : 요청마다 독립된 저장공간 제공
     private static final ThreadLocal<Map<String, Object>> RESULTS = new ThreadLocal<>();
 
     public static void capture(String toolName, Object result) {
@@ -19,6 +20,7 @@ public final class ToolResultCapture {
         RESULTS.get().put(toolName, result);
     }
 
+    // 서비스 계층에서 꺼내 쓰고 자동 삭제
     public static Map<String, Object> getAndClear() {
         Map<String, Object> results = RESULTS.get();
         RESULTS.remove();

@@ -116,6 +116,7 @@
     ```
 
 ### Tool
+> LLM이 할 수 없는 외부 기능들
 #### `@Tool`
 - LLM이 이 메서드를 호출할 수 있게 함
 - description : LLM이 이 함수가 무엇을 하는지 설명
@@ -161,14 +162,13 @@
 <details style="margin-top: 20px">
 <summary style="font-weight: bold; font-size: x-large">Step5. 다중 Function Calling과 MCP Tool 패턴</summary>
 
-### MCP Tool 패턴
-> LLM이 사용할 수 있는 도구를 체계적으로 설계하고 구현하는 패턴
+### MCP(Model Context Protocol) Tool 패턴
+> LLM이 사용할 수 있는 도구를 체계적으로 설계하고 구현하는 패턴 (외부 도구를 연결하기 위한 프로토콜)
 
 #### 핵심 원칙
 - 단일 책임, 명확한 인터페이스, 독립성, 재사용성
 
 #### 등록
-
 - 명시적 등록 (권장)
 - 자동 스캔
 
@@ -199,9 +199,7 @@
     }
     ```
 
-
 #### Tool Description 최적화 (5가지 원칙)
-
 - 무엇을 하는지
 - 언제 사용하는지
 - 파라미터 설명
@@ -209,16 +207,17 @@
 - 제한 사항
 
 #### Tool 설계 패턴
-
 - 조회 Tool (Read-Only) : 여러 번 호출해도 안전
 - 명령 Tool (Command) : 한 번만 호출해야 함, 권한 체크 필요
 - 필터링 Tool
 
 #### Tool 성능 최적화
-
 - 결과 제한
 - 비동기 실행
 - 캐싱
+
+### ToolResultCapture 패턴
+> MCP Tool의 호출 결과를 ThreadLocal에 저장하는 유틸리티 클래스
 </details>
 
 <details style="margin-top: 20px">
@@ -228,7 +227,6 @@
 > 동기식 HTTP 클라이언트를 위한 현대적인 API
 
 #### RestClient vs RestTemplate vs WebClient
-
 | **항목** | **RestTemplate** | **WebClient** | **RestClient** |
 | --- | --- | --- | --- |
 | **출시** | Spring 3.x | Spring 5.x | Spring 6.1 |
@@ -238,7 +236,6 @@
 | **권장 사용** | 레거시 | 비동기 필요 시 | 일반적인 HTTP 호출 |
 
 #### ApiProperties.java
-
 - application.yml에 있는 설정값을 타입 안전하게 관리하기 위함
 - 장점
     - 설정값을 한 곳에서 관리
@@ -246,11 +243,10 @@
     - 타입 변환을 자동으로 해줌
 
 ### Agent
-
-> 각 에이전트가 **하나의 변환/처리만** 담당
+> 하나의 작은 실행 주체 <br>
+> 각 에이전트가 **하나의 변환/처리만** 담당
 
 #### 코디네이터 에이전트
-
 - 하위 에이전트를 조율하여 항공편 검색 작업을 수행하는 에이전트
 - 어떤 순서로 어떤 에이전트를 호출할지 조율
 </details>
