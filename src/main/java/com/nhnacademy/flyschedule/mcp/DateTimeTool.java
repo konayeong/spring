@@ -1,6 +1,5 @@
 package com.nhnacademy.flyschedule.mcp;
 
-import com.nhnacademy.flyschedule.tool.AiTool;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.stereotype.Component;
@@ -14,7 +13,7 @@ import java.util.regex.Pattern;
  * - 날짜 계산 : 내일, 모레 같은 상대적 날짜를 실제 날짜로 변환
  */
 @Component
-public class DateTimeTool implements AiTool {
+public class DateTimeTool {
     // mm : 분, DD : 1년 중 몇 번째 날
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
 

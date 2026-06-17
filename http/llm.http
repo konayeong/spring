@@ -1,0 +1,6 @@
+POST localhost:8080/coordinator
+Content-Type: application/json
+
+{
+  "message": "내일 오후 2시 이후 광주에서 제주 가는 항공편 알려줘"
+}

@@ -1,5 +1,6 @@
 package com.nhnacademy.flyschedule.agent;
 
+import com.nhnacademy.flyschedule.dto.AirlineGroup;
 import com.nhnacademy.flyschedule.dto.FlightInfoResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -15,25 +16,18 @@ import java.util.TreeMap;
 @Slf4j
 @Service
 public class GroupingAgent {
-    public Map<String, List<FlightInfoResponse>> groupByAirline(List<FlightInfoResponse> flights) {
-        if (flights == null || flights.isEmpty()) {
-            return new TreeMap<>();
-        }
-
+    public List<AirlineGroup> groupByAirline(List<FlightInfoResponse> flights) {
         Map<String, List<FlightInfoResponse>> grouped = new TreeMap<>();
 
         for (FlightInfoResponse flight : flights) {
             String airlineKey = getAirlineKey(flight);
 
-            if (!grouped.containsKey(airlineKey)) {
-                grouped.put(airlineKey, new ArrayList<>());
-            }
-
-            grouped.get(airlineKey).add(flight);
+            grouped.computeIfAbsent(airlineKey, k -> new ArrayList<>()).add(flight);
         }
         
         log.info("그룹핑 완료: {}개 항공사, {}개 항공편", grouped.size(), flights.size());
-        return grouped;
+        return grouped.entrySet().stream()
+                .map(entry -> new AirlineGroup(entry.getKey(), entry.getValue())).toList();
     }
 
     @NotNull // 실제로 Null을 막는 기능 x, 개발자와 IDE에게 계약을 알려주는 표시

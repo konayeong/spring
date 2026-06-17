@@ -82,4 +82,36 @@ public class TimeFilterAgent {
                 })
                 .collect(Collectors.toList());
     }
+
+    /**
+     * 기준 시간 이전에 출발하는 항공편만 필터링
+     *
+     * @param flights 항공편 목록
+     * @param beforeTime 기준 시간
+     */
+    public List<FlightInfoResponse> filterBeforeTime(List<FlightInfoResponse> flights, LocalTime beforeTime) {
+
+        log.info("[TimeFilterAgent] {} 이전에 출발하는 항공편 필터링 시작", beforeTime);
+
+        if (flights == null || flights.isEmpty()) {
+            log.warn("[TimeFilterAgent] 항공편이 비어있다.");
+            return List.of();
+        }
+
+        return flights.stream()
+                .filter(flight -> {
+                    try {
+                        String timePart = flight.depPlandTime().substring(8, 12);
+
+                        LocalTime departureTime = LocalTime.parse(timePart, TIME_FORMATTER);
+
+                        return !departureTime.isAfter(beforeTime);
+
+                    } catch (Exception e) {
+                        log.warn("시간 파싱 실패: {}", flight.depPlandTime());
+                        return false;
+                    }
+                })
+                .toList();
+    }
 }

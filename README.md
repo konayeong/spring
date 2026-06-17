@@ -304,7 +304,7 @@
 </details>
 
 <details style="margin-top: 20px">
-<summary style="font-weight: bold; font-size: x-large">Step9. Multi-Agent Orchestration 패턴</summary>
+<summary style="font-weight: bold; font-size: x-large">Step9. Coordinator / Orchestration Pattern</summary>
 
 
 </details>

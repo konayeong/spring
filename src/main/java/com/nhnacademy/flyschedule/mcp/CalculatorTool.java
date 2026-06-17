@@ -1,6 +1,5 @@
 package com.nhnacademy.flyschedule.mcp;
 
-import com.nhnacademy.flyschedule.tool.AiTool;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class CalculatorTool implements AiTool {
+public class CalculatorTool {
 
     /**
      * 두 숫자로 더하기, 빼기, 곱하기

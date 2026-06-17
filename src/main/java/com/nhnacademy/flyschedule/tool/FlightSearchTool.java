@@ -1,6 +1,7 @@
 package com.nhnacademy.flyschedule.tool;
 
-import com.nhnacademy.flyschedule.agent.FlightSearchAgent;
+import com.nhnacademy.flyschedule.agent.*;
+import com.nhnacademy.flyschedule.dto.AirlineGroup;
 import com.nhnacademy.flyschedule.dto.FlightInfoResponse;
 import com.nhnacademy.flyschedule.mcp.ToolResultCapture;
 import lombok.RequiredArgsConstructor;
@@ -8,9 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.stereotype.Component;
-import java.util.HashMap;
+import java.time.LocalTime;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 항공편 조회를 위한 Tool
@@ -21,141 +21,105 @@ import java.util.Map;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class FlightSearchTool implements AiTool{
+public class FlightSearchTool {
 
+    private final DateParserAgent dateParserAgent;
+    private final AirportCodeAgent airportCodeAgent;
     private final FlightSearchAgent flightSearchAgent;
+    private final TimeFilterAgent timeFilterAgent;
+    private final PriceFilterAgent priceFilterAgent;
+    private final GroupingAgent groupingAgent;
 
-    // TODO-R 반환값 response dto로 처리 ?
     /**
      * 항공사별 항공편 조회
      */
     @Tool(description = """
-            출발 공항, 도착 공항, 날짜를 입력 받아 항공편을 조회 후 항공사별로 그룹지어 반환합니다.
+            출발 공항, 도착 공항, 날짜, 시간(선택), 금액(선택)을 입력 받아 항공편을 조회 후 항공사별로 그룹지어 반환합니다.
             
             언제 사용
-            - 광주공항에서 제주공항으로 내일 갈 수 있는 항공편을 알려줘.
-            - 광주에서 제주로 10일 후에 갈 수 있는 항공편을 알려줘.
+          - 내일 광주에서 제주 가는 항공편 알려줘
+          - 내일 오후 2시 이후 광주에서 제주 가는 항공편 알려줘
+          - 내일 광주에서 제주 가는 5만원 이하 항공편 알려줘
+          - 내일 오후 2시 이후 광주에서 제주 가는 5만원 이하 항공편 알려줘
+           
             
             파라미터
             - depAirport : 출발 공항 이름
             - arrAirport : 도착 공항 이름
             - date : 출발 날짜 ('오늘, 내일, 모레, N일 후' 형식을 지원)
+            - afterTime : 이후 시간 (선택)
+            - beforeTime : 이전 시간 (선택)
+            - minPrice : 최소 가격 (선택)
+            - maxPrice : 최대 가격 (선택)
             
             반환값
             - 공항, 날짜로 조회된 항공편을 항공사별로 그룹지어 항공사별 최대 3개의 항공편을 반환합니다.
             """)
-    public Map<String, List<FlightInfoResponse>> searchFlightsByAirLine(
-            @ToolParam(description = "출발 공항 이름 (예: 광주, 광주공항, 광주 공항)") String depAirport,
-            @ToolParam(description = "도착 공항 이름 (예: 제주, 제주공항, 제주 공항)") String arrAirport,
-            @ToolParam(description = "날짜 (예: 오늘, 내일, 모레, 10일 후)") String date) {
-        log.info("[항공편 조회 Tool 호출] 출발 : {}, 도착 : {}, 날짜 : {}", depAirport, arrAirport, date);
-
-        // A2A : Coordinator
-        Map<String, List<FlightInfoResponse>> allFlights = flightSearchAgent.searchAndGroupByAirline(depAirport, arrAirport, date);
-
-        Map<String, List<FlightInfoResponse>> limitFlights = limitedFlights(allFlights);
-
-        log.info("[항공편 조회 Tool 응답] {}개 항공사, {}편", limitFlights.size(), limitFlights.values().stream().mapToInt(List::size).sum());
-
-        // 결과 캡처
-        ToolResultCapture.capture("searchFlightsByAirline", limitFlights);
-        return limitFlights;
-    }
-
-    /**
-     * 항공사별 항공편 조회 - 특정 시간 이후
-     */
-    @Tool(
-            description = """
-                    출발 공항, 도착 공항, 날짜, 출발 시간을 입력 받아 항공편을 조회 후 항공사별로 그룹지어 반환합니다.
-            
-                    언제 사용
-                    - 광주공항에서 제주공항으로 내일 오후 2시 이후에 출발하는 항공편을 알려줘.
-                    - 광주에서 제주로 10일 후 14:00 이후에 출발하는 항공편을 알려줘.
-                    
-                    파라미터
-                    - depAirport : 출발 공항 이름
-                    - arrAirport : 도착 공항 이름
-                    - date : 출발 날짜 ('오늘, 내일, 모레, N일 후' 형식을 지원)
-                    - afterTime : 출발 시간 ('14:00, 오전9시, 오후2시' 형식을 지원)
-                    
-                    반환값
-                    - 공항, 날짜, 시간으로 조회된 항공편을 항공사별로 그룹지어 항공사별 최대 3개의 항공편을 반환합니다.
-                    """
-    )
-    public Map<String, List<FlightInfoResponse>> searchFlightsWithTime(
+    public List<AirlineGroup> searchFlightsByAirLine(
             @ToolParam(description = "출발 공항 이름 (예: 광주, 광주공항, 광주 공항)") String depAirport,
             @ToolParam(description = "도착 공항 이름 (예: 제주, 제주공항, 제주 공항)") String arrAirport,
             @ToolParam(description = "날짜 (예: 오늘, 내일, 모레, 10일 후)") String date,
-            @ToolParam(description = "기준 시간 (예: 14:00, 오후 2시)") String afterTime
-    ) {
-        log.info("[항공편 조회 with Time Tool 호출] 출발 : {}, 도착 : {}, 날짜 : {}", depAirport, arrAirport, date);
+            @ToolParam(description = "이후 시간 (선택)") String afterTime,
+            @ToolParam(description = "이전 시간 (선택)") String beforeTime,
+            @ToolParam(description = "최소 가격 (선택)") Integer minPrice,
+            @ToolParam(description = "최대 가격 (선택)") Integer maxPrice) {
+        log.info(" [항공편 검색 Tool 호출] 출발={} 도착={} 날짜={} 이후시간={} 이전시간={} 최소가격={} 최대가격={} ",
+                depAirport, arrAirport, date, afterTime, beforeTime, minPrice, maxPrice);
 
-        Map<String, List<FlightInfoResponse>> allFlights = flightSearchAgent.searchWithTimeFilter(depAirport, arrAirport, date, afterTime);
+        String parsedDate = dateParserAgent.parseDate(date);
 
-        Map<String, List<FlightInfoResponse>> limitFlights = limitedFlights(allFlights);
+        String depAirportId = airportCodeAgent.getAirportCode(depAirport);
+        String arrAirportId = airportCodeAgent.getAirportCode(arrAirport);
 
-        log.info("[항공편 조회 with Time Tool 응답] {}개 항공사, {}편", limitFlights.size(), limitFlights.values().stream().mapToInt(List::size).sum());
+        List<FlightInfoResponse> flights = flightSearchAgent.search(depAirportId, arrAirportId, parsedDate);
 
-        ToolResultCapture.capture("searchFlightsAfterTime", limitFlights);
-        return limitFlights;
+        log.info("검색 결과 {}건", flights.size());
+
+        // 이후 시간 필터
+        if (afterTime != null && !afterTime.isBlank()) {
+            LocalTime filterTime = timeFilterAgent.parseTime(afterTime);
+            flights = timeFilterAgent.filterAfterTime(flights, filterTime);
+            log.info("이후 시간 필터 적용 후 {}건", flights.size());
+        }
+
+        // 이전 시간 필터
+        if (beforeTime != null && !beforeTime.isBlank()) {
+            LocalTime filterTime = timeFilterAgent.parseTime(beforeTime);
+            flights = timeFilterAgent.filterBeforeTime(flights, filterTime);
+            log.info("이전 시간 필터 적용 후 {}건", flights.size());
+        }
+
+        // 가격 필터
+        if (minPrice != null || maxPrice != null) {
+            flights = priceFilterAgent.filterByPriceRange(    flights, minPrice, maxPrice);
+            log.info("가격 필터 적용 후 {}건", flights.size());
+        }
+
+        // 그룹핑
+        List<AirlineGroup> result = groupingAgent.groupByAirline(flights);
+
+        // 항공사별 최대 3개
+        result = limitFlights(result);
+
+        log.info("최종 결과 {}개 항공사", result.size());
+
+        ToolResultCapture.capture("searchFlights", result);
+
+        return result;
     }
 
     /**
-     * 항공사별 항공편 조회 - 특정 가격 범위 내
+     * 항공사별 최대 3개만 반환
      */
-    @Tool(
-            description = """
-                    출발 공항, 도착 공항, 날짜, 최소 금액, 최대 금액을 입력 받아 항공편을 조회 후 항공사별로 그룹지어 반환합니다.
-            
-                    언제 사용
-                    - 광주공항에서 제주공항으로 내일 출발하는 30000만원 이상인 항공편을 알려줘
-                    - 광주에서 제주로 10일 후 14:00 이후에 출발하는 20000원 이상, 50000원 이하인 항공편을 알려줘
-                    
-                    파라미터
-                    - depAirport : 출발 공항 이름
-                    - arrAirport : 도착 공항 이름
-                    - date : 출발 날짜 ('오늘, 내일, 모레, N일 후' 형식을 지원)
-                    - minPrice : 최소 금액 (선택 사항)
-                    - maxPrice : 최대 금액 (선택 사항)
-                    
-                    반환값
-                    - 공항, 날짜, 예산으로 조회된 항공편을 항공사별로 그룹지어 항공사별 최대 3개의 항공편을 반환합니다.
-                    """
-    )
-    public Map<String, List<FlightInfoResponse>> searchFlightsWithPrice(
-            @ToolParam(description = "출발 공항 이름 (예: 광주, 광주공항, 광주 공항)") String depAirport,
-            @ToolParam(description = "도착 공항 이름 (예: 제주, 제주공항, 제주 공항)") String arrAirport,
-            @ToolParam(description = "날짜 (예: 오늘, 내일, 모레, 10일 후)") String date,
-            @ToolParam(description = "최소 가격 (선택 사항, 예: 30000)") Integer minPrice,
-            @ToolParam(description = "최대 가격 (선택 사항, 예: 50000)") Integer maxPrice
-    ) {
-        log.info("[항공편 조회 with Price Tool 호출] 출발 : {}, 도착 : {}, 날짜 : {}", depAirport, arrAirport, date);
-
-        Map<String, List<FlightInfoResponse>> allFlights = flightSearchAgent.searchWithPriceFilter(depAirport, arrAirport, date, minPrice, maxPrice);
-
-        Map<String, List<FlightInfoResponse>> limitFlights = limitedFlights(allFlights);
-
-        log.info("[항공편 조회 with Price Tool 응답] {}개 항공사, {}편", limitFlights.size(), limitFlights.values().stream().mapToInt(List::size).sum());
-
-        ToolResultCapture.capture("searchFlightsWithPrice", limitFlights);
-        return limitFlights;
-    }
-
-    /**
-     * 항공사별 최대 3개
-     */
-    private Map<String, List<FlightInfoResponse>> limitedFlights(Map<String, List<FlightInfoResponse>> allFlights) {
-        Map<String, List<FlightInfoResponse>> limitedFlights = new HashMap<>();
-
-        allFlights.forEach((airline, flights) -> {
-            if(flights.size() > 3) {
-                limitedFlights.put(airline, flights.subList(0, 3));
-            } else {
-                limitedFlights.put(airline, flights);
-            }
-        });
-
-        return limitedFlights;
+    private List<AirlineGroup> limitFlights(List<AirlineGroup> groups) {
+        return groups.stream()
+                .map(group ->
+                        new AirlineGroup(group.airlineName(),
+                                group.flights().size() > 3
+                                        ? group.flights().subList(0, 3)
+                                        : group.flights()
+                        )
+                )
+                .toList();
     }
 }
