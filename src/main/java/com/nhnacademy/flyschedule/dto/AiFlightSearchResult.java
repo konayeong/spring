@@ -2,6 +2,9 @@ package com.nhnacademy.flyschedule.dto;
 
 import java.util.List;
 
+/**
+ * 자연어 처리 결과 저장하는 DTO
+ */
 public record AiFlightSearchResult(
         boolean success,
         String message,
@@ -13,6 +16,6 @@ public record AiFlightSearchResult(
     }
 
     public static AiFlightSearchResult error(String message) {
-        return new AiFlightSearchResult(false, message, null, null);
+        return new AiFlightSearchResult(false, message, null, List.of());
     }
 }

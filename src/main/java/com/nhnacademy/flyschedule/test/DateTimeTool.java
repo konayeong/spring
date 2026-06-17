@@ -1,4 +1,4 @@
-package com.nhnacademy.flyschedule.mcp;
+package com.nhnacademy.flyschedule.test;
 
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;

@@ -1,4 +1,4 @@
-package com.nhnacademy.flyschedule.service;
+package com.nhnacademy.flyschedule.test;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;

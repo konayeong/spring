@@ -1,4 +1,4 @@
-package com.nhnacademy.flyschedule.controller;
+package com.nhnacademy.flyschedule.test;
 
 import com.nhnacademy.flyschedule.agent.AirportCodeAgent;
 import com.nhnacademy.flyschedule.agent.DateParserAgent;

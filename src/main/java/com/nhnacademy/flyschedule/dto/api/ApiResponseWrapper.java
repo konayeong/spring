@@ -1,8 +1,11 @@
-package com.nhnacademy.flyschedule.dto;
+package com.nhnacademy.flyschedule.dto.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
+/**
+ * 공공 데이터 API : 전체 wrapper
+ */
 public record ApiResponseWrapper<T> (
     @JsonProperty("response")
     Response<T> response

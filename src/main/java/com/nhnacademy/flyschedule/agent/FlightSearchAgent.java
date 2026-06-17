@@ -1,17 +1,17 @@
 package com.nhnacademy.flyschedule.agent;
 
 import com.nhnacademy.flyschedule.service.FlightApiClient;
-import com.nhnacademy.flyschedule.dto.FlightInfoResponse;
+import com.nhnacademy.flyschedule.dto.api.FlightInfoResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.util.*;
 
+// TODO-R 카페인 캐시, 코드 전체 다시 확인 필요
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class FlightSearchAgent {
-    // TODO-R 카페인 캐시 적용해서 캐싱 (파라미터 마다 다르게 해야함)
     private final FlightApiClient flightApiClient;
 
     /**

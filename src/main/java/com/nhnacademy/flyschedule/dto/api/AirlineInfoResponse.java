@@ -1,9 +1,9 @@
-package com.nhnacademy.flyschedule.dto;
+package com.nhnacademy.flyschedule.dto.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * 항공사 정보 응답
+ * 공공데이터 API : 항공사 정보 응답
  */
 public record AirlineInfoResponse (
         @JsonProperty("airlineId")

@@ -1,6 +1,17 @@
-POST localhost:8080/coordinator
+### Coordination
+POST localhost:8080/api/flight/coordinator
 Content-Type: application/json
 
 {
-  "message": "내일 오후 2시 이후 광주에서 제주 가는 항공편 알려줘"
+  "message": "내일 오후 2시 이후 광주에서 제주 가는 항공편 알려줘",
+  "llmType": "ollama"
+}
+
+### Orchestration
+POST localhost:8080/api/flight/orchestration
+Content-Type: application/json
+
+{
+  "message": "내일 오후 2시 이후 광주에서 제주 가는 항공편 알려줘",
+  "llmType": "ollama"
 }

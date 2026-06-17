@@ -11,40 +11,112 @@
     <h2>AI 항공편 검색</h2>
 
     <div class="mb-3">
-        <input id="message" class="form-control" placeholder="예) 내일 오후 2시 이후 광주에서 제주 가는 항공편 알려줘"/>
+        <input id="message" class="form-control" placeholder="예) 내일 오후 2시 이후 광주에서 제주 가는 항공편 알려줘">
     </div>
 
-    <button class="btn btn-primary" onclick="coordinate()">Coordinator</button>
-    <button class="btn btn-warning" onclick="a2a()">A2A</button>
+    <label>
+        <input type="radio" name="llmType" value="OLLAMA" checked>
+        Ollama
+    </label>
+
+    <label>
+        <input type="radio" name="llmType" value="GEMINI">
+        Gemini
+    </label>
+
+    <br>
+
+    <button class="btn btn-primary mt-2" onclick="coordinate()">Coordinator</button>
+    <button class="btn btn-warning mt-2" onclick="orchestration()">Orchestrator</button>
 
     <hr>
 
-    <div id="result"></div>
+    <div>
+        <input class="btn btn-dark" type="button"
+               value="모레 광주→제주"
+               data-msg="모레 광주에서 제주 가는 항공편 알려줘"
+               onclick="setMessage(this.dataset.msg)">
+
+        <input class="btn btn-dark" type="button"
+               value="시간 조건"
+               data-msg="2026-06-27 오전 11시 이후 오후 6시 이전 제주에서 광주 가는 항공편 알려줘"
+               onclick="setMessage(this.dataset.msg)">
+
+        <input class="btn btn-dark" type="button"
+               value="가격 조건"
+               data-msg="내일 광주에서 제주 가는 30000원 이상 60000원 이하인 항공편 알려줘"
+               onclick="setMessage(this.dataset.msg)">
+
+        <input class="btn btn-dark" type="button"
+               value="복합 조건 (시간 + 가격)"
+               data-msg="내일모레 오전 11시 이후 오후 6시 이전 광주에서 제주 가는 20000원 이상 60000원 이하인 항공편 알려줘"
+               onclick="setMessage(this.dataset.msg)">
+    </div>
+
+    <div id="loading" class="mt-4 d-none">
+        <h2>🤖 검색중</h2>
+    </div>
+    <div id="result" class="mt-3">
+
+    </div>
 
 </div>
 
 <script>
     async function coordinate() {
+        viewLoad();
         const message = document.getElementById("message").value;
+        const llmType = document.querySelector('input[name="llmType"]:checked').value;
 
-        const response =
-            await fetch("/coordinator", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({message: message})
-            });
+        const response = await fetch("/api/flight/coordinator", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                message: message,
+                llmType: llmType
+            })
+        });
 
         const data = await response.json();
         renderResult(data);
     }
 
-    async function a2a() {
+    async function orchestration() {
+        viewLoad();
+        const message = document.getElementById("message").value;
+        const llmType = document.querySelector('input[name="llmType"]:checked').value;
 
+        const response = await fetch("/api/flight/orchestration", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                message: message,
+                llmType: llmType
+            })
+        });
+
+        const data = await response.json();
+        renderResult(data);
+    }
+
+    function viewLoad() {
+        document.getElementById("loading").classList.replace("d-none", "d-flex");
+    }
+
+    function hideLoad() {
+        document.getElementById("loading").classList.replace("d-flex", "d-none");
+    }
+
+    function setMessage(text) {
+        document.getElementById("message").value = text;
     }
 
     function renderResult(result) {
+        hideLoad();
         const container = document.getElementById("result");
 
         if (!result.success) {
@@ -66,8 +138,11 @@
                 <div class="card-body">
                     출발 : ${result.param.departure}<br>
                     도착 : ${result.param.arrival}<br>
-                    날짜 : ${result.param.date}<br>
-                    시간 : ${result.param.afterTime ?? "-"}
+                    날짜 : ${result.param.date} <br>
+                    출발 시간(이후) : ${result.param.afterTime ?? "-"}<br>
+                    출발 시간(이전) : ${result.param.beforeTime ?? "-"}<br>
+                    최소 금액 : ${result.param.minPrice ?? "-"}<br>
+                    최대 금액 : ${result.param.maxPrice ?? "-"}<br>
                 </div>
             </div>
         `;
@@ -91,7 +166,7 @@
                         <br>
                         출발 : ${formatTime(flight.depPlandTime)} → 도착 : ${formatTime(flight.arrPlandTime)}
                         <br>
-                        일반석 : ${flight.economyCharge.toLocaleString()}원
+                        일반석 : ${flight.economyCharge.toLocaleString()}
                     </div>
                 `;
             });

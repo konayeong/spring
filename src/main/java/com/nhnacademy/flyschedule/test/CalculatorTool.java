@@ -1,4 +1,4 @@
-package com.nhnacademy.flyschedule.mcp;
+package com.nhnacademy.flyschedule.test;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.tool.annotation.Tool;

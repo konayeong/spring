@@ -1,9 +1,9 @@
-package com.nhnacademy.flyschedule.dto;
+package com.nhnacademy.flyschedule.dto.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * 항공편 정보 응답
+ * 공공데이터 API : 항공편 정보 응답
  */
 public record FlightInfoResponse (
         @JsonProperty("vihicleId")
@@ -18,9 +18,8 @@ public record FlightInfoResponse (
         @JsonProperty("arrPlandTime")
         String arrPlandTime,
 
-        // TODO-Q Integer로 이렇게 바꿔도 되나?
         @JsonProperty("economyCharge")
-        Integer economyCharge,
+        String economyCharge,
 
         @JsonProperty("prestigeCharge")
         String prestigeCharge,

@@ -1,7 +1,7 @@
 package com.nhnacademy.flyschedule.agent;
 
 import com.nhnacademy.flyschedule.service.FlightApiClient;
-import com.nhnacademy.flyschedule.dto.AirlineInfoResponse;
+import com.nhnacademy.flyschedule.dto.api.AirlineInfoResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * AirlineName -> AirlineId
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor

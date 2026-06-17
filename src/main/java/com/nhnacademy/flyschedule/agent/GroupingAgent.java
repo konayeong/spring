@@ -1,7 +1,7 @@
 package com.nhnacademy.flyschedule.agent;
 
 import com.nhnacademy.flyschedule.dto.AirlineGroup;
-import com.nhnacademy.flyschedule.dto.FlightInfoResponse;
+import com.nhnacademy.flyschedule.dto.api.FlightInfoResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class GroupingAgent {
 
             grouped.computeIfAbsent(airlineKey, k -> new ArrayList<>()).add(flight);
         }
-        
+
         log.info("그룹핑 완료: {}개 항공사, {}개 항공편", grouped.size(), flights.size());
         return grouped.entrySet().stream()
                 .map(entry -> new AirlineGroup(entry.getKey(), entry.getValue())).toList();

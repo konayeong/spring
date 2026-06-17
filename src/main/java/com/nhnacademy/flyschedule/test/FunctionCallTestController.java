@@ -1,6 +1,5 @@
-package com.nhnacademy.flyschedule.controller;
+package com.nhnacademy.flyschedule.test;
 
-import com.nhnacademy.flyschedule.service.FunctionCallTestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

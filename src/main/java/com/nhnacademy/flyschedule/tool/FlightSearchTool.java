@@ -2,7 +2,7 @@ package com.nhnacademy.flyschedule.tool;
 
 import com.nhnacademy.flyschedule.agent.*;
 import com.nhnacademy.flyschedule.dto.AirlineGroup;
-import com.nhnacademy.flyschedule.dto.FlightInfoResponse;
+import com.nhnacademy.flyschedule.dto.api.FlightInfoResponse;
 import com.nhnacademy.flyschedule.mcp.ToolResultCapture;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,7 @@ public class FlightSearchTool {
      * 항공사별 항공편 조회
      */
     @Tool(description = """
-            출발 공항, 도착 공항, 날짜, 시간(선택), 금액(선택)을 입력 받아 항공편을 조회 후 항공사별로 그룹지어 반환합니다.
+            출발지, 도착지, 날짜, 시간(선택), 금액(선택)을 입력 받아 항공편을 조회 후 항공사별로 그룹지어 반환합니다.
             
             언제 사용
           - 내일 광주에서 제주 가는 항공편 알려줘
@@ -44,8 +44,8 @@ public class FlightSearchTool {
            
             
             파라미터
-            - depAirport : 출발 공항 이름
-            - arrAirport : 도착 공항 이름
+            - departure : 출발지
+            - arrival : 도착지
             - date : 출발 날짜 ('오늘, 내일, 모레, N일 후' 형식을 지원)
             - afterTime : 이후 시간 (선택)
             - beforeTime : 이전 시간 (선택)
@@ -56,20 +56,20 @@ public class FlightSearchTool {
             - 공항, 날짜로 조회된 항공편을 항공사별로 그룹지어 항공사별 최대 3개의 항공편을 반환합니다.
             """)
     public List<AirlineGroup> searchFlightsByAirLine(
-            @ToolParam(description = "출발 공항 이름 (예: 광주, 광주공항, 광주 공항)") String depAirport,
-            @ToolParam(description = "도착 공항 이름 (예: 제주, 제주공항, 제주 공항)") String arrAirport,
+            @ToolParam(description = "출발지 (예: 광주, 광주공항, 광주 공항)") String departure,
+            @ToolParam(description = "도착지 (예: 제주, 제주공항, 제주 공항)") String arrival,
             @ToolParam(description = "날짜 (예: 오늘, 내일, 모레, 10일 후)") String date,
             @ToolParam(description = "이후 시간 (선택)") String afterTime,
             @ToolParam(description = "이전 시간 (선택)") String beforeTime,
             @ToolParam(description = "최소 가격 (선택)") Integer minPrice,
             @ToolParam(description = "최대 가격 (선택)") Integer maxPrice) {
         log.info(" [항공편 검색 Tool 호출] 출발={} 도착={} 날짜={} 이후시간={} 이전시간={} 최소가격={} 최대가격={} ",
-                depAirport, arrAirport, date, afterTime, beforeTime, minPrice, maxPrice);
+                departure, arrival, date, afterTime, beforeTime, minPrice, maxPrice);
 
         String parsedDate = dateParserAgent.parseDate(date);
 
-        String depAirportId = airportCodeAgent.getAirportCode(depAirport);
-        String arrAirportId = airportCodeAgent.getAirportCode(arrAirport);
+        String depAirportId = airportCodeAgent.getAirportCode(departure);
+        String arrAirportId = airportCodeAgent.getAirportCode(arrival);
 
         List<FlightInfoResponse> flights = flightSearchAgent.search(depAirportId, arrAirportId, parsedDate);
 

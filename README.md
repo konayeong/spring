@@ -306,6 +306,17 @@
 <details style="margin-top: 20px">
 <summary style="font-weight: bold; font-size: x-large">Step9. Coordinator / Orchestration Pattern</summary>
 
+### Coordinator (개발자 중심 제어)
+> Controller -> Coordinator -> Tool 호출 순서 고정
+- 호출 흐름을 개발자가 100% 결정
+- 어떤 Tool을 언제 호출할지 코드에 다 있음
+- 결과도 직접 모음
+
+### Orchestrator (LLM 중심 제어)
+> User Prompt -> LLM -> Tool 선택/호출 -> 결과 조합
+- Tool을 누가 호출할지 LLM이 결정
+- 실행 흐름이 고정되어 있지 않음
+- "필요하면 Tool 호출" 구조
 
 </details>
 

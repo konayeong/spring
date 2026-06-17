@@ -1,6 +1,6 @@
 package com.nhnacademy.flyschedule.agent;
 
-import com.nhnacademy.flyschedule.dto.FlightInfoResponse;
+import com.nhnacademy.flyschedule.dto.api.FlightInfoResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ public class PriceFilterAgent {
 
         return flights.stream()
                 .filter(flight -> {
-                    Integer price = flight.economyCharge();
+                    Integer price = Integer.parseInt(flight.economyCharge());
                     if (price == null || price == 0) return false;
                     if (minPrice != null && price < minPrice) return false;
                     return maxPrice == null || price <= maxPrice;

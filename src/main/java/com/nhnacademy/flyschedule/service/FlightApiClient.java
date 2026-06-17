@@ -1,10 +1,10 @@
 package com.nhnacademy.flyschedule.service;
 
 import com.nhnacademy.flyschedule.config.ApiProperties;
-import com.nhnacademy.flyschedule.dto.AirlineInfoResponse;
-import com.nhnacademy.flyschedule.dto.AirportInfoResponse;
-import com.nhnacademy.flyschedule.dto.ApiResponseWrapper;
-import com.nhnacademy.flyschedule.dto.FlightInfoResponse;
+import com.nhnacademy.flyschedule.dto.api.AirlineInfoResponse;
+import com.nhnacademy.flyschedule.dto.api.AirportInfoResponse;
+import com.nhnacademy.flyschedule.dto.api.ApiResponseWrapper;
+import com.nhnacademy.flyschedule.dto.api.FlightInfoResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;

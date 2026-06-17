@@ -1,10 +1,8 @@
 package com.nhnacademy.flyschedule.service;
 
 import com.nhnacademy.flyschedule.agent.*;
-import com.nhnacademy.flyschedule.dto.AiFlightSearchResult;
-import com.nhnacademy.flyschedule.dto.AirlineGroup;
-import com.nhnacademy.flyschedule.dto.FlightInfoResponse;
-import com.nhnacademy.flyschedule.dto.FlightSearchParam;
+import com.nhnacademy.flyschedule.dto.*;
+import com.nhnacademy.flyschedule.dto.api.FlightInfoResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,9 +23,10 @@ public class FlightSearchCoordinator {
     private final PriceFilterAgent priceFilterAgent;
     private final GroupingAgent groupingAgent;
 
-    public AiFlightSearchResult  search(String message) {
+    public AiFlightSearchResult  search(String message, LlmType llmType) {
+        log.info("[Coordinator] Start");
         log.info("1단계 LLM 분석");
-        FlightSearchParam param = llmAnalysisService.analyze(message);
+        FlightSearchParam param = llmAnalysisService.analyze(message, llmType);
         log.info("LLM 분석 결과 : {}", param);
 
         log.info("2단계 날짜 변환");
@@ -47,6 +46,7 @@ public class FlightSearchCoordinator {
         if(param.minPrice() != null || param.maxPrice() != null) {
             flights = priceFilterAgent.filterByPriceRange(flights, param.minPrice(), param.maxPrice());
         }
+
         log.info("5단계 항공사 단위 그룹화");
         List<AirlineGroup> groups = groupingAgent.groupByAirline(flights);
 

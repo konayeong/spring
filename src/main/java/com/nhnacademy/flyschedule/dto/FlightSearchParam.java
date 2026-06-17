@@ -3,7 +3,7 @@ package com.nhnacademy.flyschedule.dto;
 import org.springframework.context.annotation.Description;
 
 /**
- * LLM이 추출한 결과를 Entity로 받기 위해 Description 설정
+ * LLM이 추출한 파라미터를 Entity로 받기 위해 Description 설정
  */
 public record FlightSearchParam (
         @Description("출발 공항 또는 도시 이름. 예: 광주, 제주, 김포")

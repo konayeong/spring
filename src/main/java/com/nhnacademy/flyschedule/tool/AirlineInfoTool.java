@@ -1,7 +1,7 @@
 package com.nhnacademy.flyschedule.tool;
 
 import com.nhnacademy.flyschedule.agent.AirlineListAgent;
-import com.nhnacademy.flyschedule.dto.AirlineInfoResponse;
+import com.nhnacademy.flyschedule.dto.api.AirlineInfoResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.tool.annotation.Tool;
