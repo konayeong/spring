@@ -1,7 +1,6 @@
 package com.nhnacademy.flyschedule.service;
 
 import com.nhnacademy.flyschedule.dto.FlightSearchParam;
-import com.nhnacademy.flyschedule.dto.FlightSearchRequest;
 import com.nhnacademy.flyschedule.dto.LlmType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
@@ -19,8 +18,8 @@ public class LlmAnalysisService {
     private final ChatClient geminiClient;
     private final ChatClient ollamaClient;
 
-    public LlmAnalysisService(@Qualifier("geminiChatClientBuilder") ChatClient.Builder geminiBuilder,
-                              @Qualifier("ollamaChatClientBuilder") ChatClient.Builder ollamaBuilder) {
+    public LlmAnalysisService(@Qualifier("geminiAnalysisClientBuilder") ChatClient.Builder geminiBuilder,
+                              @Qualifier("ollamaAnalysisClientBuilder") ChatClient.Builder ollamaBuilder) {
         this.geminiClient = geminiBuilder.build();
         this.ollamaClient = ollamaBuilder.build();
     }

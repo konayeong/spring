@@ -43,6 +43,10 @@ public class FlightSearchCoordinator {
             flights = timeFilterAgent.filterAfterTime(flights, timeFilterAgent.parseTime(param.afterTime()));
         }
 
+        if(param.beforeTime() != null) {
+            flights = timeFilterAgent.filterBeforeTime(flights, timeFilterAgent.parseTime(param.beforeTime()));
+        }
+
         if(param.minPrice() != null || param.maxPrice() != null) {
             flights = priceFilterAgent.filterByPriceRange(flights, param.minPrice(), param.maxPrice());
         }

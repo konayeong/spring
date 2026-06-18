@@ -46,4 +46,18 @@ public class ChatClientConfig {
                 .defaultAdvisors(new SimpleLoggerAdvisor(), chatLoggingAdvisor);
     }
 
+    /**
+     * Tool 호출 없는
+     */
+    @Bean(name = "ollamaAnalysisClientBuilder")
+    public ChatClient.Builder ollamaAnalysisClientBuilder(@Qualifier("ollamaChatModel") ChatModel ollamaChatModel) {
+        return ChatClient.builder(ollamaChatModel)
+                .defaultAdvisors(new SimpleLoggerAdvisor(), chatLoggingAdvisor);
+    }
+
+    @Bean(name = "geminiAnalysisClientBuilder")
+    public ChatClient.Builder geminiAnalysisClientBuilder(@Qualifier("googleGenAiChatModel") ChatModel geminiChatModel) {
+        return ChatClient.builder(geminiChatModel)
+                .defaultAdvisors(new SimpleLoggerAdvisor(), chatLoggingAdvisor);
+    }
 }

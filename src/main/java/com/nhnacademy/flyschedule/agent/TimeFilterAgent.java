@@ -80,7 +80,7 @@ public class TimeFilterAgent {
                         return false;
                     }
                 })
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
@@ -102,11 +102,8 @@ public class TimeFilterAgent {
                 .filter(flight -> {
                     try {
                         String timePart = flight.depPlandTime().substring(8, 12);
-
                         LocalTime departureTime = LocalTime.parse(timePart, TIME_FORMATTER);
-
                         return !departureTime.isAfter(beforeTime);
-
                     } catch (Exception e) {
                         log.warn("시간 파싱 실패: {}", flight.depPlandTime());
                         return false;

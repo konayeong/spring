@@ -319,7 +319,3 @@
 - "필요하면 Tool 호출" 구조
 
 </details>
-
-### 구현 후 할 일
-- sonarQube-issue 해결
-- TODO-R : 리팩토링
