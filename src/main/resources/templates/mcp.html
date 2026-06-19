@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>MCP Tool</title>
+</head>
+<body>
+<div class="container mt-5">
+    <h2>MCP Tool 항공편 검색</h2>
+
+    <div class="container mt-5">
+        <div class="card shadow">
+            <div class="card-header">
+                항공편 검색
+            </div>
+            <div class="card-body">
+
+                <div class="d-flex flex-wrap gap-2 mb-3">
+                    <button class="btn btn-outline-primary" onclick="setBasicSearch()">
+                        기본 검색
+                    </button>
+
+                    <button class="btn btn-outline-success" onclick="setTimeSearch()">
+                        오후 2시 이후
+                    </button>
+
+                    <button class="btn btn-outline-warning" onclick="setPriceSearch()">
+                        3~7만원
+                    </button>
+                </div>
+
+                <form id="flightSearchForm">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">출발 공항</label>
+                            <select id="departure" class="form-select">
+                                <option
+                                    th:each="airport:${airports}"
+                                    th:text="${airport.airportName}"
+                                    th:value="${airport.airportName}"
+                                >
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">도착 공항</label>
+                            <select id="arrival" class="form-select">
+                                <option
+                                        th:each="airport:${airports}"
+                                        th:text="${airport.airportName}"
+                                        th:value="${airport.airportName}"
+                                >
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">날짜</label>
+                            <input id="date" class="form-control" placeholder="내일, 모레">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">이후</label>
+                            <input id="afterTime" class="form-control" placeholder="오전 8시">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">이전</label>
+                            <input id="beforeTime" class="form-control" placeholder="오후 2시">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">최소 가격</label>
+                            <input id="minPrice" type="number" class="form-control" placeholder="30000">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">최대 가격</label>
+                            <input id="maxPrice" type="number" class="form-control" placeholder="70000">
+                        </div>
+
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary w-100">검색</button>
+                        </div>
+                    </div>
+                </form>
+
+                <hr>
+
+                <div id="loading" class="mt-4 d-none">
+                    <h2>🤖 검색중</h2>
+                </div>
+
+                <div id="result" class="mt-4"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    async function setBasicSearch() {
+        document.getElementById('departure').value = '광주';
+        document.getElementById('arrival').value = '제주';
+        document.getElementById('date').value = '내일';
+        document.getElementById('beforeTime').value = '';
+        document.getElementById('afterTime').value = '';
+        document.getElementById('minPrice').value = '';
+        document.getElementById('maxPrice').value = '';
+    }
+
+    async function setTimeSearch() {
+        await setBasicSearch();
+        document.getElementById('beforeTime').value = '오후 2시';
+        document.getElementById('afterTime').value = '오전 8시';
+    }
+
+    async function setPriceSearch() {
+        await setBasicSearch();
+        document.getElementById('minPrice').value = 30000;
+        document.getElementById('maxPrice').value = 70000
+    }
+
+   document.getElementById('flightSearchForm').addEventListener('submit', async (event) =>  {
+       event.preventDefault(); // 기본 submit(새로고침) 막기
+        viewLoad();
+        const departure = document.getElementById('departure').value;
+        const arrival = document.getElementById('arrival').value;
+        const date = document.getElementById('date').value;
+        const afterTime = document.getElementById('afterTime').value;
+        const beforeTime = document.getElementById('beforeTime').value;
+        const minPrice = document.getElementById('minPrice').value;
+        const maxPrice = document.getElementById('maxPrice').value;
+
+        try {
+            const response = await fetch('/api/mcp/flights', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    depAirport: departure,
+                    arrAirport: arrival,
+                    date: date,
+                    afterTime: afterTime,
+                    beforeTime: beforeTime,
+                    minPrice: minPrice,
+                    maxPrice: maxPrice
+                })
+            })
+
+            if(!response.ok) {
+                throw new Error('검색 실패');
+            }
+
+            const flights = await response.json();
+            renderResult(flights);
+        } catch(e) {
+            console.error(e);
+        } finally {
+            hideLoad();
+        }
+    })
+
+    function viewLoad() {
+        const container = document.getElementById("result");
+        container.innerHTML = "<div></div>";
+        document.getElementById("loading").classList.replace("d-none", "d-flex");
+    }
+
+    function hideLoad() {
+        document.getElementById("loading").classList.replace("d-flex", "d-none");
+    }
+
+    function renderResult(result) {
+        hideLoad();
+        const container = document.getElementById("result");
+
+        let html = "";
+
+        result.forEach(group => {
+            html += `
+                <div class="card mb-3">
+
+                    <div class="card-header">
+                        ${group.airlineName}
+                    </div>
+
+                    <div class="card-body">
+            `;
+
+            group.flights.forEach(flight => {
+                html += `
+                    <div class="border rounded p-2 mb-2">
+                        <b>${flight.vihicleId}</b>
+
+                        <br>
+                        출발 : ${formatTime(flight.depPlandTime)} → 도착 : ${formatTime(flight.arrPlandTime)}
+                        <br>
+                        일반석 : ${flight.economyCharge.toLocaleString()}
+                    </div>
+                `;
+            });
+
+            html += `
+                    </div>
+                 </div>
+            `;
+        });
+
+        container.innerHTML = html;
+    }
+
+    function formatTime(time) {
+        return time.substring(8, 10) + ":" + time.substring(10, 12);
+    }
+</script>
+</body>
+</html>
