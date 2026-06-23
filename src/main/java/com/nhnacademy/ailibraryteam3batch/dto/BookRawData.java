@@ -2,10 +2,12 @@ package com.nhnacademy.ailibraryteam3batch.dto;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 @Slf4j
 public record BookRawData(
@@ -26,8 +28,8 @@ public record BookRawData(
         LocalDate secondPublishDate,   // 2차 발행일
         Boolean isBookStorePresent,  // 인터넷 서점 도서 존재 여부
         Boolean isPortalPresent,   // 포털 사이트 도서 존재 여부
-        Long isbn10              // 구 ISBN
-        ) {
+        String isbn10              // 구 ISBN
+) {
 
     public static BookRawData from(CSVRecord record) {
         return new BookRawData(
@@ -48,8 +50,13 @@ public record BookRawData(
                 getDate(record, "TWO_PBLICTE_DE"),
                 getBoolean(record, "INTNT_BOOKST_BOOK_EXST_AT"),
                 getBoolean(record, "PORTAL_SITE_BOOK_EXST_AT"),
-                null
+                record.get("ISBN_NO")
         );
+    }
+
+    private static String getString(CSVRecord record, String column) {
+        String value = record.get(column);
+        return value == null || value.isBlank() ? null : value.trim();
     }
 
     private static Long getLong(CSVRecord record, String column) {
@@ -80,37 +87,13 @@ public record BookRawData(
         if (value == null || value.isBlank()) {
             return null;
         }
+        value = value.trim();
 
         try {
             return new BigDecimal(value).intValue();
 
         } catch (Exception e) {
             log.warn("정수 파싱 실패 - column={}, value={}", column, value);
-            return null;
-        }
-    }
-
-    private static LocalDate getDate(CSVRecord record, String column) {
-        String value = record.get(column);
-
-        if (value == null || value.isBlank()) {
-            return null;
-        }
-
-        try {
-            if (value.contains("-")) {
-                return LocalDate.parse(value, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            }
-
-            if (value.length() == 8) {
-                return LocalDate.parse(value, DateTimeFormatter.ofPattern("yyyyMMdd"));
-            }
-            // count로 처리하는게 좋다. (log 너무 많아짐)
-            log.warn("잘못된 날짜 형식 - column={}, value={}", column, value);
-            return null;
-
-        } catch (Exception e) {
-            log.warn("날짜 파싱 실패 - column={}, value={}", column, value);
             return null;
         }
     }
@@ -123,5 +106,73 @@ public record BookRawData(
         }
 
         return "Y".equalsIgnoreCase(value);
+    }
+
+    private static LocalDate getDate(CSVRecord record, String column) {
+        String value = getString(record, column);
+        if (value == null || value.isBlank()) {
+            return null;
+        }
+
+        if (value.startsWith("民國")) {
+            String number = value.replaceAll("[^0-9]", ""); // 790101
+            int rocYear = Integer.parseInt(number.substring(0, number.length() - 4));
+            int year = rocYear + 1911;
+
+            String monthDay = number.substring(number.length() - 4);
+            value = year + monthDay; // 19900101
+        }
+
+        String v = value.replaceAll("[^0-9]", "");
+
+
+        if (v.length() == 4) {
+            // 1998
+            v = v + "0101";
+        } else if (v.length() == 6) {
+            // 199802
+            v = v + "01";
+        }
+        if (v.length() == 8) {
+            String year = v.substring(0, 4);
+            String month = v.substring(4, 6);
+            String day = v.substring(6, 8);
+
+            // 19980000 같은 케이스
+            if (month.equals("00")) {
+                month = "01";
+            }
+
+            if (day.equals("00")) {
+                day = "01";
+            }
+
+            v = year + month + day;
+
+            // 19982000 같은 케이스
+            if (!isValidDate(v)) {
+                String firstYear = v.substring(0, 4);
+                v = firstYear + "0101";
+            }
+        } else {
+            return null;
+        }
+
+        return LocalDate.parse(
+                v,
+                DateTimeFormatter.ofPattern("uuuuMMdd")
+        );
+    }
+
+    private static boolean isValidDate(String value) {
+        try {
+            LocalDate.parse(
+                    value,
+                    DateTimeFormatter.ofPattern("uuuuMMdd")
+            );
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
     }
 }

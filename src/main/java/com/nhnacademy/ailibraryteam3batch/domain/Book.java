@@ -3,12 +3,9 @@ package com.nhnacademy.ailibraryteam3batch.domain;
 import com.nhnacademy.ailibraryteam3batch.dto.BookRawData;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
