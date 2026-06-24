@@ -26,6 +26,11 @@ public class CustomizedBookRepositoryImpl implements CustomizedBookRepository {
     private final QBook book = QBook.book;
 
     @Override
+    public Page<BookSearchResponse> searchAll(Pageable pageable) {
+        return search(pageable, null);
+    }
+
+    @Override
     public Page<BookSearchResponse> searchByKeyword(Pageable pageable, String keyword) {
         return search(pageable, keywordContains(keyword));
     }
@@ -44,18 +49,13 @@ public class CustomizedBookRepositoryImpl implements CustomizedBookRepository {
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize())
                         .fetch();
-
-        return new PageImpl<>(content, pageable, count(condition));
-    }
-
-    // TODO-S 이거 구하는 이유
-    private long count(Predicate condition) {
+        // TODO-S 이거 구하는 이유
         Long total = queryFactory.select(book.count())
-                        .from(book)
-                        .where(condition)
-                        .fetchOne();
+                .from(book)
+                .where(condition)
+                .fetchOne();
 
-        return total == null ? 0L : total;
+        return new PageImpl<>(content, pageable, (total == null ? 0L : total));
     }
 
     private QBookSearchResponse bookProjection() {

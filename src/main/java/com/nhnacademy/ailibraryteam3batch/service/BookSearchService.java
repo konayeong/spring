@@ -1,10 +1,10 @@
 package com.nhnacademy.ailibraryteam3batch.service;
 
+import com.nhnacademy.ailibraryteam3batch.dto.search.BookSearchRequest;
 import com.nhnacademy.ailibraryteam3batch.dto.search.BookSearchResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface BookSearchService {
-    Page<BookSearchResponse> searchBooks(Pageable pageable, String keyword);
-    Page<BookSearchResponse> searchBooksByISBN(Pageable pageable, String isbn);
+    Page<BookSearchResponse> search(Pageable pageable, BookSearchRequest request);
 }
