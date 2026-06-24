@@ -13,7 +13,7 @@ import java.time.format.DateTimeParseException;
 public record BookRawData(
         Long id,                // 일련번호
         String isbn,    // ISBN 13자리
-        String volumnName,              // 권 명
+        String volumeName,              // 권 명
         String title,            // 도서명
         String author,            // 저자명
         String publisherName,        // 출판사명

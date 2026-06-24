@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "books_na")
+@Table(name = "books")
 @Getter
 @NoArgsConstructor
 public class Book {
@@ -27,7 +27,7 @@ public class Book {
     private String isbn13;
 
     @Column(length = 25)
-    private String volumnName;
+    private String volumeName;
 
     @NotNull
     @Column(nullable = false, length = 1000)
@@ -67,11 +67,14 @@ public class Book {
 
     private Boolean isPortalPresent;
 
-    private Book(String isbn13, String volumnName, String title, String author, String publisherName, LocalDate firstPublishedDate, String additionSymbol, Integer price,
-            String imageUrl, String content, String kdcCode, String subTitle, String subAuthor, LocalDate secondPublishedDate, Boolean isBookstorePresent, Boolean isPortalPresent
+    @Column(columnDefinition = "vector")
+    private String embedding;
+
+    private Book(String isbn13, String volumeName, String title, String author, String publisherName, LocalDate firstPublishedDate, String additionSymbol, Integer price,
+                 String imageUrl, String content, String kdcCode, String subTitle, String subAuthor, LocalDate secondPublishedDate, Boolean isBookstorePresent, Boolean isPortalPresent
     ) {
         this.isbn13 = isbn13;
-        this.volumnName = volumnName;
+        this.volumeName = volumeName;
         this.title = title;
         this.author = author;
         this.publisherName = publisherName;
@@ -91,7 +94,7 @@ public class Book {
     public static Book from(BookRawData rawData) {
         return new Book(
                 rawData.isbn(),
-                rawData.volumnName(),
+                rawData.volumeName(),
                 rawData.title(),
                 rawData.author(),
                 rawData.publisherName(),

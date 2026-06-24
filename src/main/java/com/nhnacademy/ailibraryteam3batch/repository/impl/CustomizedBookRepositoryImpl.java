@@ -49,7 +49,6 @@ public class CustomizedBookRepositoryImpl implements CustomizedBookRepository {
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize())
                         .fetch();
-        // TODO-S 이거 구하는 이유
         Long total = queryFactory.select(book.count())
                 .from(book)
                 .where(condition)
@@ -67,7 +66,8 @@ public class CustomizedBookRepositoryImpl implements CustomizedBookRepository {
                 book.author,
                 book.publisherName,
                 book.price,
-                book.imageUrl
+                book.imageUrl,
+                book.volumeName
         );
     }
 

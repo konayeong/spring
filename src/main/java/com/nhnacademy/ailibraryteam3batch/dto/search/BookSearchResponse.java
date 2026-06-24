@@ -15,9 +15,10 @@ public class BookSearchResponse {
     private String publisherName;
     private Integer price;
     private String imageUrl;
+    private String volumeName;
 
     @QueryProjection // 응답 객체에 Querydsl 의존 발생
-    public BookSearchResponse(Long id, String isbn, String title, String author, String publisherName, Integer price, String imageUrl) {
+    public BookSearchResponse(Long id, String isbn, String title, String author, String publisherName, Integer price, String imageUrl, String volumeName) {
         this.id = id;
         this.isbn = isbn;
         this.title = title;
@@ -25,5 +26,6 @@ public class BookSearchResponse {
         this.publisherName = publisherName;
         this.price = price;
         this.imageUrl = imageUrl;
+        this.volumeName = volumeName;
     }
 }

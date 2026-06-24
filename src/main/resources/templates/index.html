@@ -70,10 +70,11 @@
                 <div class="col-md-10">
                     <div class="card-body">
 
-                        <h5 class="card-title"
-                            th:text="${book.title}">
-                            제목
-                        </h5>
+                        <h3>
+                            <span th:text="${book.title}">제목</span>
+                            <span th:if="${book.volumeName} != null"
+                                  th:text="' ' + ${book.volumeName}"> vol</span>
+                        </h3>
 
                         <p class="card-text mb-1">
                             <strong>저자:</strong>
